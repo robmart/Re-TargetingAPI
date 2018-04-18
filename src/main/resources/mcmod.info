@@ -1,0 +1,16 @@
+[
+{
+  "modid": "targeting_api",
+  "name": "Targeting API",
+  "description": "Mod for exposing a common targeting api.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Kovak"],
+  "credits": "The Forge and FML guys, Chaos Buffalo.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
