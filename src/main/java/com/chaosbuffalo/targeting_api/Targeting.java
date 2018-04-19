@@ -11,7 +11,6 @@ import net.minecraft.scoreboard.Team;
 
 import java.util.Set;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 public class Targeting {
 
