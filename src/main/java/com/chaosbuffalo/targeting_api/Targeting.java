@@ -141,6 +141,30 @@ public class Targeting {
         return false;
     }
 
+    private static boolean casterIsFriendlyPlayerControlled(Entity caster, Entity target){
+        Entity controller = caster.getControllingPassenger();
+        if (controller instanceof EntityPlayer) {
+            return isValidFriendly(controller, target);
+        }
+
+        if (caster instanceof IEntityOwnable) {
+            IEntityOwnable ownable = (IEntityOwnable) caster;
+
+            Entity owner = ownable.getOwner();
+            if (owner != null) {
+                // Owner is online, perform the normal checks
+                return isValidFriendly(owner, target);
+            } else if (ownable.getOwnerId() != null) {
+                // Entity is owned, but the owner is offline
+                // If the owner if offline then there's not much we can do.
+                // return true so that we consider everyone our friend
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private static boolean checkAssociation(Entity caster, Entity target, TargetType type) {
         return associations.stream()
                 .filter(a -> a.TargetType == type)
@@ -169,6 +193,9 @@ public class Targeting {
             return true;
 
         if (isFriendlyPlayerControlled(caster, target))
+            return true;
+
+        if (casterIsFriendlyPlayerControlled(caster, target))
             return true;
 
         if (target instanceof EntityLivingBase) {

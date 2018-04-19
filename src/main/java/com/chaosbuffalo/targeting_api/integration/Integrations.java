@@ -23,6 +23,7 @@ public class Integrations {
         System.out.println("Hooking into lycanites.");
         Targeting.registerFriendlyEntity("com.lycanitesmobs.elementalmobs.entity.EntityNymph");
         BiFunction<Entity, Entity, Boolean> lycanitesWrapper = (caster, target) -> {
+            System.out.println(String.format("Running lycanites callback on %s, %s", caster.getName(), target.getName()));
             return Targeting.isValidTarget(Targeting.TargetType.ENEMY, caster, target, true);
         };
         com.lycanitesmobs.api.Targeting.registerCallback(lycanitesWrapper);
