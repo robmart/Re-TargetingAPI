@@ -20,7 +20,9 @@ public class TargetingAPI
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
+
         logger = event.getModLog();
+        Integrations.setupMinecraft();
     }
 
     @EventHandler

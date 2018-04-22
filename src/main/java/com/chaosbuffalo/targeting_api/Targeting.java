@@ -1,4 +1,5 @@
 package com.chaosbuffalo.targeting_api;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -9,6 +10,7 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.scoreboard.Team;
 
+import java.util.Map;
 import java.util.Set;
 import java.util.function.BiFunction;
 
@@ -33,6 +35,19 @@ public class Targeting {
     private static Set<Association> associations = Sets.newHashSet();
 
     private static Set<BiFunction<Entity, Entity, Boolean>> friendlyCallbacks = Sets.newHashSet();
+
+    private static Set<Faction> factions = Sets.newHashSet();
+
+    private static Map<String, Faction> factionMap = Maps.newHashMap();
+
+    public static void registerFaction(Faction newFaction){
+        factions.add(newFaction);
+        factionMap.put(newFaction.name, newFaction);
+    }
+
+    public static Faction getFaction(String factionName){
+        return factionMap.get(factionName);
+    }
 
     public static void registerFriendlyEntity(String className) {
         friendlyEntityTypes.add(className);
@@ -165,6 +180,15 @@ public class Targeting {
         return false;
     }
 
+    private static boolean checkFactionFriends(Entity caster, Entity target){
+        for (Faction f : factions){
+            if (f.isMember(target.getClass()) && f.isFriend(caster.getClass())){
+                return true;
+            }
+        }
+        return false;
+    }
+
     private static boolean checkAssociation(Entity caster, Entity target, TargetType type) {
         return associations.stream()
                 .filter(a -> a.TargetType == type)
@@ -206,6 +230,10 @@ public class Targeting {
 
         if (checkAssociation(caster, target, TargetType.FRIENDLY))
             return true;
+
+        if (checkFactionFriends(caster, target)){
+            return true;
+        }
 
         for (BiFunction<Entity, Entity, Boolean> callback : friendlyCallbacks){
             if (callback.apply(caster, target)){
