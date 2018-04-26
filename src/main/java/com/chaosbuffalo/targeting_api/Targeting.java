@@ -30,6 +30,10 @@ public class Targeting {
         public TargetType TargetType;
     }
 
+    private static boolean areEntitiesEqual(Entity first, Entity second) {
+        return first.getUniqueID().compareTo(second.getUniqueID()) == 0;
+    }
+
     private static Set<String> friendlyEntityTypes = Sets.newHashSet();
 
     private static Set<Association> associations = Sets.newHashSet();
@@ -67,7 +71,7 @@ public class Targeting {
 
     public static boolean isValidTarget(TargetType type, Entity caster, Entity target, boolean excludeCaster) {
 
-        if (excludeCaster && caster.isEntityEqual(target)) {
+        if (excludeCaster && areEntitiesEqual(caster, target)) {
             return false;
         }
 
@@ -83,7 +87,7 @@ public class Targeting {
             case ALL:
                 return true;
             case SELF:
-                return caster.isEntityEqual(target);
+                return areEntitiesEqual(caster, target);
             case PLAYERS:
                 return target instanceof EntityPlayer;
             case FRIENDLY:
@@ -122,7 +126,7 @@ public class Targeting {
 
     private static boolean isFriendlyPlayer(Entity caster, Entity target) {
 
-        if (caster.isEntityEqual(target))
+        if (areEntitiesEqual(caster, target))
             return true;
 
         // Currently the only friendly player check is if the caster and target are on the same team
@@ -199,7 +203,7 @@ public class Targeting {
     private static boolean isValidFriendly(Entity caster, Entity target) {
 
         // Always friendly with ourselves
-        if (caster.isEntityEqual(target)) {
+        if (areEntitiesEqual(caster, target)) {
             return true;
         }
 

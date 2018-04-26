@@ -18,11 +18,9 @@ public class Integrations {
     }
 
     private static void setupLycanites(){
-
         if (!isLycanitesPresent()){
             return;
         }
-        System.out.println("Hooking into lycanites.");
         Targeting.registerFriendlyEntity("com.lycanitesmobs.elementalmobs.entity.EntityNymph");
         BiFunction<Entity, Entity, Boolean> lycanitesWrapper = (caster, target) -> {
             return Targeting.isValidTarget(Targeting.TargetType.ENEMY, caster, target, true);
