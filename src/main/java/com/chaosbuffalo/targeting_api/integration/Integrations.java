@@ -4,6 +4,7 @@ import com.chaosbuffalo.targeting_api.Faction;
 import com.chaosbuffalo.targeting_api.Targeting;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.*;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.Loader;
 
 import java.util.function.BiFunction;
@@ -22,6 +23,7 @@ public class Integrations {
             return;
         }
         Targeting.registerFriendlyEntity("com.lycanitesmobs.elementalmobs.entity.EntityNymph");
+        Targeting.registerFriendlyEntity("com.lycanitesmobs.elementalmobs.entity.EntityWisp");
         BiFunction<Entity, Entity, Boolean> lycanitesWrapper = (caster, target) -> {
             return Targeting.isValidTarget(Targeting.TargetType.ENEMY, caster, target, true);
         };
@@ -42,6 +44,7 @@ public class Integrations {
         animals.addMember(EntityPig.class);
         animals.addMember(EntityRabbit.class);
         Targeting.registerFaction(animals);
+        animals.addFriendClass(EntityPlayer.class);
     }
 
     public static void setup(){
