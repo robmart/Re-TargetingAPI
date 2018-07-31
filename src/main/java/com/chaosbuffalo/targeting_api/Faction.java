@@ -1,6 +1,7 @@
 package com.chaosbuffalo.targeting_api;
 
 import com.google.common.collect.Sets;
+import net.minecraft.entity.Entity;
 
 import java.util.Set;
 
@@ -15,23 +16,38 @@ public class Faction {
         this.name = name;
     }
 
-    private Set<Class> members = Sets.newHashSet();
+    private Set<Class<? extends Entity>> members = Sets.newHashSet();
 
-    private Set<Class> friendClasses = Sets.newHashSet();
+    private Set<Class<? extends Entity>> friendClasses = Sets.newHashSet();
 
-    public void addFriendClass(Class classToAdd) {
+    public void addFriendClass(Class<? extends Entity> classToAdd) {
         friendClasses.add(classToAdd);
     }
 
-    public void addMember(Class classToAdd){
+    public void addMember(Class<? extends Entity> classToAdd){
         members.add(classToAdd);
     }
 
-    public boolean isMember(Class potentialMember){
-        return members.contains(potentialMember);
+    public boolean isMember(Class<? extends Entity> potentialMember){
+        if (potentialMember != null){
+            for (Class<? extends Entity> member : members){
+                if (member.isAssignableFrom(potentialMember)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
-    public boolean isFriend(Class potentialFriend){
-        return friendClasses.contains(potentialFriend);
+    public boolean isFriend(Class<? extends Entity> potentialFriend){
+
+        if (potentialFriend != null){
+            for (Class<? extends Entity> member : members){
+                if (member.isAssignableFrom(potentialFriend)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

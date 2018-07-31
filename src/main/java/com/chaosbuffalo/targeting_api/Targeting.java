@@ -6,7 +6,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.monster.EntityIronGolem;
-import net.minecraft.entity.passive.EntityVillager;
+import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.scoreboard.Team;
 
@@ -15,6 +15,28 @@ import java.util.Set;
 import java.util.function.BiFunction;
 
 public class Targeting {
+
+    static {
+        Faction animals = new Faction("FarmAnimals");
+        animals.addMember(EntityChicken.class);
+        animals.addMember(EntitySheep.class);
+        animals.addMember(EntityCow.class);
+        animals.addMember(EntityDonkey.class);
+        animals.addMember(EntityHorse.class);
+        animals.addMember(EntityLlama.class);
+        animals.addMember(EntityMooshroom.class);
+        animals.addMember(EntityMule.class);
+        animals.addMember(EntityPig.class);
+        animals.addMember(EntityRabbit.class);
+        animals.addMember(EntityLlama.class);
+        animals.addMember(EntityMooshroom.class);
+        animals.addMember(EntityParrot.class);
+        animals.addMember(EntityOcelot.class);
+        animals.addMember(EntityWolf.class);
+        animals.addMember(EntitySquid.class);
+        Targeting.registerFaction(animals);
+        animals.addFriendClass(EntityPlayer.class);
+    }
 
     public enum TargetType {
         ALL,

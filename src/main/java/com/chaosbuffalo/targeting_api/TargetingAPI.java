@@ -1,7 +1,5 @@
 package com.chaosbuffalo.targeting_api;
 
-import com.chaosbuffalo.targeting_api.integration.Integrations;
-import net.minecraft.init.Blocks;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -20,14 +18,12 @@ public class TargetingAPI
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-
         logger = event.getModLog();
-        Integrations.setupMinecraft();
     }
 
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-        Integrations.setup();
+
     }
 }
