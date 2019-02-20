@@ -16,6 +16,16 @@ import java.util.function.BiFunction;
 
 public class Targeting {
 
+    private static Set<String> friendlyEntityTypes = Sets.newHashSet();
+
+    private static Set<Association> associations = Sets.newHashSet();
+
+    private static Set<BiFunction<Entity, Entity, Boolean>> friendlyCallbacks = Sets.newHashSet();
+
+    private static Set<Faction> factions = Sets.newHashSet();
+
+    private static Map<String, Faction> factionMap = Maps.newHashMap();
+
     static {
         Faction animals = new Faction("FarmAnimals");
         animals.addMember(EntityChicken.class);
@@ -53,18 +63,8 @@ public class Targeting {
     }
 
     private static boolean areEntitiesEqual(Entity first, Entity second) {
-        return first.getUniqueID().compareTo(second.getUniqueID()) == 0;
+        return first != null && second != null && first.getUniqueID().compareTo(second.getUniqueID()) == 0;
     }
-
-    private static Set<String> friendlyEntityTypes = Sets.newHashSet();
-
-    private static Set<Association> associations = Sets.newHashSet();
-
-    private static Set<BiFunction<Entity, Entity, Boolean>> friendlyCallbacks = Sets.newHashSet();
-
-    private static Set<Faction> factions = Sets.newHashSet();
-
-    private static Map<String, Faction> factionMap = Maps.newHashMap();
 
     public static void registerFaction(Faction newFaction){
         factions.add(newFaction);
@@ -92,7 +92,9 @@ public class Targeting {
     }
 
     public static boolean isValidTarget(TargetType type, Entity caster, Entity target, boolean excludeCaster) {
-
+        if (caster == null || target == null) {
+            return false;
+        }
         if (excludeCaster && areEntitiesEqual(caster, target)) {
             return false;
         }
@@ -103,6 +105,10 @@ public class Targeting {
 
         // Ignore spectators
         if (target instanceof EntityPlayer && ((EntityPlayer) target).isSpectator())
+            return false;
+
+        // Ignore Creative Mode players
+        if (target instanceof EntityPlayer && ((EntityPlayer) target).isCreative())
             return false;
 
         switch (type) {
@@ -215,6 +221,15 @@ public class Targeting {
         return false;
     }
 
+    private static boolean checkFactionMembers(Entity caster, Entity target){
+        for (Faction f : factions){
+            if (f.isMember(target.getClass()) && f.isMember(caster.getClass())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private static boolean checkAssociation(Entity caster, Entity target, TargetType type) {
         return associations.stream()
                 .filter(a -> a.TargetType == type)
@@ -256,6 +271,10 @@ public class Targeting {
 
         if (checkAssociation(caster, target, TargetType.FRIENDLY))
             return true;
+
+        if (checkFactionMembers(caster, target)){
+            return true;
+        }
 
         if (checkFactionFriends(caster, target)){
             return true;

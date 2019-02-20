@@ -11,7 +11,7 @@ public class TargetingAPI
 {
     public static final String MODID = "targeting_api";
     public static final String NAME = "Targeting API";
-    public static final String VERSION = "0.1";
+    public static final String VERSION = "0.12";
 
     private static Logger logger;
 

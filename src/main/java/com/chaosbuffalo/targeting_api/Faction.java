@@ -42,7 +42,7 @@ public class Faction {
     public boolean isFriend(Class<? extends Entity> potentialFriend){
 
         if (potentialFriend != null){
-            for (Class<? extends Entity> member : members){
+            for (Class<? extends Entity> member : friendClasses){
                 if (member.isAssignableFrom(potentialFriend)){
                     return true;
                 }
