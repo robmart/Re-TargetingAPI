@@ -14,7 +14,6 @@ public class ConfigHandler {
     {
         if (event.getModID().equals(TargetingAPI.MODID)) {
             ConfigManager.sync(TargetingAPI.MODID, Config.Type.INSTANCE);
-            Targeting.clearFriendlyEntities();
             TargetingConfig.registerFriendlyEntities();
             TargetingConfig.registerFarmAnimals();
         }
