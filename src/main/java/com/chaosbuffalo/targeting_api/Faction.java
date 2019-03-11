@@ -28,6 +28,10 @@ public class Faction {
         members.add(classToAdd);
     }
 
+    public void clearMembers(){
+        members.clear();
+    }
+
     public boolean isMember(Class<? extends Entity> potentialMember){
         if (potentialMember != null){
             for (Class<? extends Entity> member : members){

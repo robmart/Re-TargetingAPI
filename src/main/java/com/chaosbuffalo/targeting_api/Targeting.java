@@ -6,7 +6,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.monster.EntityIronGolem;
-import net.minecraft.entity.passive.*;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.scoreboard.Team;
 
@@ -28,24 +28,8 @@ public class Targeting {
 
     static {
         Faction animals = new Faction("FarmAnimals");
-        animals.addMember(EntityChicken.class);
-        animals.addMember(EntitySheep.class);
-        animals.addMember(EntityCow.class);
-        animals.addMember(EntityDonkey.class);
-        animals.addMember(EntityHorse.class);
-        animals.addMember(EntityLlama.class);
-        animals.addMember(EntityMooshroom.class);
-        animals.addMember(EntityMule.class);
-        animals.addMember(EntityPig.class);
-        animals.addMember(EntityRabbit.class);
-        animals.addMember(EntityLlama.class);
-        animals.addMember(EntityMooshroom.class);
-        animals.addMember(EntityParrot.class);
-        animals.addMember(EntityOcelot.class);
-        animals.addMember(EntityWolf.class);
-        animals.addMember(EntitySquid.class);
-        Targeting.registerFaction(animals);
         animals.addFriendClass(EntityPlayer.class);
+        Targeting.registerFaction(animals);
     }
 
     public enum TargetType {
@@ -77,6 +61,10 @@ public class Targeting {
 
     public static void registerFriendlyEntity(String className) {
         friendlyEntityTypes.add(className);
+    }
+
+    public static void clearFriendlyEntities(){
+        friendlyEntityTypes.clear();
     }
 
     public static void registerFriendlyCallback(BiFunction<Entity, Entity, Boolean> callback) {
