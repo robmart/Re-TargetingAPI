@@ -5,20 +5,19 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 import java.io.File;
 
 @Config(modid = TargetingAPI.MODID, category = "gameplay")
 public class TargetingConfig {
 
-    @Config.Comment("Class Names for Friendly Entities")
+    @Config.Comment("Registry Names for Friendly Entities")
     public static String[] FRIENDLY_ENTITIES = {
-            "com.lycanitesmobs.elementalmobs.entity.EntityNymph",
-            "com.lycanitesmobs.elementalmobs.entity.EntityWisp"
+            "elementalmobs:nymph",
+            "elementalmobs:wisp"
     };
 
-    @Config.Comment("Class Names for Friendly Entities")
+    @Config.Comment("Registry Names for Farm Animals")
     public static String[] FARM_ANIMALS = {
             "minecraft:cow",
             "minecraft:sheep",
@@ -58,6 +57,7 @@ public class TargetingConfig {
             Class<? extends Entity> entityclass = EntityList.getClass(loc);
             if (entityclass != null){
                 farmAnimals.addMember(entityclass);
+                Log.info("Entity %s registered as farm animal.", farmAnimal);
             } else {
                 Log.info("Entity %s not registered, skipping", farmAnimal);
             }
@@ -67,8 +67,14 @@ public class TargetingConfig {
     public static void registerFriendlyEntities(){
         Targeting.clearFriendlyEntities();
         for (String friendlyClass : FRIENDLY_ENTITIES){
-            Log.info("%s registered as friendly entity.", friendlyClass);
-            Targeting.registerFriendlyEntity(friendlyClass);
+            ResourceLocation loc = new ResourceLocation(friendlyClass);
+            Class<? extends Entity> entityclass = EntityList.getClass(loc);
+            if (entityclass != null){
+                Targeting.registerFriendlyEntity(entityclass.getName());
+                Log.info("%s registered as friendly entity.", friendlyClass);
+            } else {
+                Log.info("Entity %s not registered, skipping", friendlyClass);
+            }
         }
     }
 }
