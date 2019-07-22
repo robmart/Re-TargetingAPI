@@ -14,7 +14,9 @@ public class TargetingConfig {
     @Config.Comment("Registry Names for Friendly Entities")
     public static String[] FRIENDLY_ENTITIES = {
             "elementalmobs:nymph",
-            "elementalmobs:wisp"
+            "elementalmobs:wisp",
+            "mowziesmobs:lantern",
+            "lootablebodies:corpse"
     };
 
     @Config.Comment("Registry Names for Farm Animals")

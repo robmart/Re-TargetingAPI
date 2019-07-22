@@ -67,6 +67,17 @@ public class Targeting {
         friendlyEntityTypes.clear();
     }
 
+    public static boolean isFriendlyWithPlayers(Entity target){
+        Faction farmAnimals = getFaction("FarmAnimals");
+        if (target instanceof EntityLiving){
+            return isRegisteredFriendly(target) || farmAnimals.isMember(target.getClass()) ||
+                    checkFriendlyLiving((EntityLiving) target) || isPlayerControlled(target);
+        } else {
+            return isRegisteredFriendly(target) || farmAnimals.isMember(target.getClass())
+                    || isPlayerControlled(target);
+        }
+    }
+
     public static void registerFriendlyCallback(BiFunction<Entity, Entity, Boolean> callback) {
         friendlyCallbacks.add(callback);
     }
@@ -83,10 +94,12 @@ public class Targeting {
         if (caster == null || target == null) {
             return false;
         }
+        if (!(target instanceof EntityLivingBase)){
+            return false;
+        }
         if (excludeCaster && areEntitiesEqual(caster, target)) {
             return false;
         }
-
         // Targets should be alive
         if (!target.isEntityAlive())
             return false;
@@ -149,6 +162,23 @@ public class Targeting {
         if (isSameTeam(caster, target))
             return true;
 
+        return false;
+    }
+
+    private static boolean isPlayerControlled(Entity target) {
+        Entity controller = target.getControllingPassenger();
+        if (controller instanceof EntityPlayer) {
+            return true;
+        }
+        if (target instanceof IEntityOwnable) {
+            IEntityOwnable ownable = (IEntityOwnable) target;
+            if (ownable.getOwnerId() != null) {
+                // Entity is owned, but the owner is offline
+                // If the owner if offline then there's not much we can do.
+                // Returning false for right now due to Lycanites AI quirks
+                return true;
+            }
+        }
         return false;
     }
 
