@@ -139,9 +139,13 @@ public class Targeting {
 
     private static boolean isValidFriendlyCreature(Entity caster, EntityLivingBase target) {
 
-        if (target instanceof EntityLiving) {
+        if (target instanceof EntityLiving && caster instanceof EntityPlayer) {
             EntityLiving otherMob = (EntityLiving) target;
             return checkFriendlyLiving(otherMob) || isRegisteredFriendly(target);
+        } else if (target instanceof EntityLiving && caster instanceof EntityLiving) {
+            EntityLiving otherMob = (EntityLiving) target;
+            return isRegisteredFriendly(caster) &&
+                    (checkFriendlyLiving(otherMob) || isRegisteredFriendly(target));
         }
 
         return false;
@@ -263,7 +267,7 @@ public class Targeting {
         }
 
         // Always friendly with whitelisted entities
-        if (isRegisteredFriendly(target)) {
+        if (caster instanceof EntityPlayer && isRegisteredFriendly(target)) {
             return true;
         }
 
