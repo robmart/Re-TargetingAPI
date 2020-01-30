@@ -3,7 +3,7 @@ package com.chaosbuffalo.targeting_api.api.reference;
 /**
  * Created by Robmart.
  * <p>
- * This software is a modification for the game Minecraft, intended to give the game RPG party features.
+ * This software is a modification for the game Minecraft.
  * Copyright (C) 2020 Robmart
  * <p>
  * This program is free software: you can redistribute it and/or modify
