@@ -1,5 +1,7 @@
 package com.chaosbuffalo.targeting_api.api.faction;
 
+import net.minecraft.entity.Entity;
+
 /**
  * Created by Robmart.
  * <p>
@@ -20,4 +22,11 @@ package com.chaosbuffalo.targeting_api.api.faction;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 public interface IFaction {
+
+    String getName();
+    void addFriendClass(Class<? extends Entity> classToAdd);
+    void addMemberClass(Class<? extends Entity> classToAdd);
+    void clearMembers();
+    boolean isMember(Class<? extends Entity> potentialMember);
+    boolean isFriend(Class<? extends Entity> potentialFriend);
 }

@@ -21,24 +21,29 @@ public class Faction implements IFaction {
         this.name = name;
     }
 
+    @Override
     public String getName() {
         return this.name;
     }
 
+    @Override
     public void addFriendClass(Class<? extends Entity> classToAdd) {
         if (!isFriend(classToAdd))
             friendClasses.add(classToAdd);
     }
 
+    @Override
     public void addMemberClass(Class<? extends Entity> classToAdd){
         if (!isMember(classToAdd))
             memberClasses.add(classToAdd);
     }
 
+    @Override
     public void clearMembers(){
         memberClasses.clear();
     }
 
+    @Override
     public boolean isMember(Class<? extends Entity> potentialMember){
         if (potentialMember == null) return false;
         for (Class<? extends Entity> member : memberClasses){
@@ -48,6 +53,7 @@ public class Faction implements IFaction {
         return false;
     }
 
+    @Override
     public boolean isFriend(Class<? extends Entity> potentialFriend){
         if (potentialFriend == null) return false;
         for (Class<? extends Entity> member : friendClasses){
