@@ -62,7 +62,7 @@ public class TargetingConfig {
             ResourceLocation loc = new ResourceLocation(farmAnimal);
             Class<? extends Entity> entityclass = EntityList.getClass(loc);
             if (entityclass != null){
-                farmAnimals.addMember(entityclass);
+                farmAnimals.addMemberClass(entityclass);
                 TargetingAPI.logger.info("Entity {} registered as farm animal.", farmAnimal);
             } else {
                 TargetingAPI.logger.info("Entity {} not registered, skipping", farmAnimal);

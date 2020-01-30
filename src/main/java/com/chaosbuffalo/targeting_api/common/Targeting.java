@@ -46,7 +46,7 @@ public class Targeting {
 
     public static void registerFaction(Faction newFaction){
         factions.add(newFaction);
-        factionMap.put(newFaction.name, newFaction);
+        factionMap.put(newFaction.getName(), newFaction);
     }
 
     public static Faction getFaction(String factionName){
