@@ -1,6 +1,9 @@
-package com.chaosbuffalo.targeting_api.common;
+package com.chaosbuffalo.targeting_api.common.config;
 
 import com.chaosbuffalo.targeting_api.api.reference.Reference;
+import com.chaosbuffalo.targeting_api.common.Targeting;
+import com.chaosbuffalo.targeting_api.common.TargetingAPI;
+import com.chaosbuffalo.targeting_api.common.faction.Faction;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.util.ResourceLocation;

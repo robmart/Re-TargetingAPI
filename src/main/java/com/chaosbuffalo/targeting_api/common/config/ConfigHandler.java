@@ -1,4 +1,4 @@
-package com.chaosbuffalo.targeting_api.common;
+package com.chaosbuffalo.targeting_api.common.config;
 
 import com.chaosbuffalo.targeting_api.api.reference.Reference;
 import net.minecraftforge.common.config.Config;

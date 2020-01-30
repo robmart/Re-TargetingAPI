@@ -1,5 +1,6 @@
 package com.chaosbuffalo.targeting_api.common;
 
+import com.chaosbuffalo.targeting_api.common.config.TargetingConfig;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
