@@ -20,8 +20,11 @@ package com.chaosbuffalo.targeting_api.api.reference;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 public class Reference {
+<<<<<<< HEAD
     public static final String MOD_ID            = "targeting_api";
     public static final String MOD_NAME          = "Targeting API";
     public static final String MOD_VERSION       = "GRADLE:VERSION";
     public static final String MINECRAFT_VERSION = "GRADLE:MCVERSION";
+=======
+>>>>>>> refactoring
 }
