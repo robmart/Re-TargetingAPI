@@ -1,4 +1,5 @@
 package com.chaosbuffalo.targeting_api.common;
+import com.chaosbuffalo.targeting_api.api.TargetType;
 import com.chaosbuffalo.targeting_api.common.faction.Faction;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -33,18 +34,10 @@ public class Targeting {
         Targeting.registerFaction(animals);
     }
 
-    public enum TargetType {
-        ALL,
-        ENEMY,
-        FRIENDLY,
-        PLAYERS,
-        SELF,
-    }
-
     private static class Association {
         public Class Source;
         public Class Target;
-        public TargetType TargetType;
+        public com.chaosbuffalo.targeting_api.api.TargetType TargetType;
     }
 
     private static boolean areEntitiesEqual(Entity first, Entity second) {
