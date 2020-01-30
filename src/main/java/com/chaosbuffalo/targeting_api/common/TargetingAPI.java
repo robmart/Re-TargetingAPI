@@ -9,33 +9,31 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 
-@Mod(modid = TargetingAPI.MODID, name = TargetingAPI.NAME, version = TargetingAPI.VERSION)
+import static com.chaosbuffalo.targeting_api.api.reference.Reference.MOD_ID;
+import static com.chaosbuffalo.targeting_api.api.reference.Reference.MOD_NAME;
+
+@Mod(modid = MOD_ID, name = MOD_NAME, version = TargetingAPI.VERSION)
 public class TargetingAPI
 {
-    public static final String MODID = "targeting_api";
-    public static final String NAME = "Targeting API";
     public static final String VERSION = "0.15";
 
     public static Logger logger;
     private static File suggested;
 
     @EventHandler
-    public void preInit(FMLPreInitializationEvent event)
-    {
+    public void preInit(FMLPreInitializationEvent event) {
         logger = event.getModLog();
         suggested = event.getSuggestedConfigurationFile();
 
     }
 
     @EventHandler
-    public void init(FMLInitializationEvent event)
-    {
+    public void init(FMLInitializationEvent event) {
 
     }
 
     @EventHandler
-    public void postInit(FMLPostInitializationEvent event)
-    {
+    public void postInit(FMLPostInitializationEvent event) {
         TargetingConfig.init(suggested);
     }
 }

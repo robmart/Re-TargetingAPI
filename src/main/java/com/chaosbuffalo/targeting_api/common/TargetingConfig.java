@@ -1,5 +1,7 @@
 package com.chaosbuffalo.targeting_api;
 
+import com.chaosbuffalo.targeting_api.api.reference.Reference;
+import com.chaosbuffalo.targeting_api.common.TargetingAPI;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.util.ResourceLocation;
@@ -8,7 +10,7 @@ import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
 
-@Config(modid = TargetingAPI.MODID, category = "gameplay")
+@Config(modid = Reference.MOD_ID, category = "gameplay")
 public class TargetingConfig {
 
     @Config.Comment("Registry Names for Friendly Entities")
