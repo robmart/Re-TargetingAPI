@@ -1,4 +1,4 @@
-package com.chaosbuffalo.targeting_api;
+package com.chaosbuffalo.targeting_api.common;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.Entity;

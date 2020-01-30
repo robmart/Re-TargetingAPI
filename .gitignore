@@ -16,7 +16,9 @@ out
 # gradle
 build
 .gradle
+old-build.gradle
 
 # other
 eclipse
 run
+private.properties

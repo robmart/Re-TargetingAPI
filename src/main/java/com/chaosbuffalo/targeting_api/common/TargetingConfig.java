@@ -1,5 +1,6 @@
-package com.chaosbuffalo.targeting_api;
+package com.chaosbuffalo.targeting_api.common;
 
+import com.chaosbuffalo.targeting_api.api.reference.Reference;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.util.ResourceLocation;
@@ -8,7 +9,7 @@ import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
 
-@Config(modid = TargetingAPI.MODID, category = "gameplay")
+@Config(modid = Reference.MOD_ID, category = "gameplay")
 public class TargetingConfig {
 
     @Config.Comment("Registry Names for Friendly Entities")
@@ -42,7 +43,7 @@ public class TargetingConfig {
         try {
             config.load();
         } catch (Exception e) {
-            Log.info("Error loading config, returning to default variables.");
+            TargetingAPI.logger.info("Error loading config, returning to default variables.");
         } finally {
             TargetingConfig.registerFriendlyEntities();
             TargetingConfig.registerFarmAnimals();
@@ -59,9 +60,9 @@ public class TargetingConfig {
             Class<? extends Entity> entityclass = EntityList.getClass(loc);
             if (entityclass != null){
                 farmAnimals.addMember(entityclass);
-                Log.info("Entity %s registered as farm animal.", farmAnimal);
+                TargetingAPI.logger.info("Entity %s registered as farm animal.", farmAnimal);
             } else {
-                Log.info("Entity %s not registered, skipping", farmAnimal);
+                TargetingAPI.logger.info("Entity %s not registered, skipping", farmAnimal);
             }
         }
     }
@@ -73,9 +74,9 @@ public class TargetingConfig {
             Class<? extends Entity> entityclass = EntityList.getClass(loc);
             if (entityclass != null){
                 Targeting.registerFriendlyEntity(entityclass.getName());
-                Log.info("%s registered as friendly entity.", friendlyClass);
+                TargetingAPI.logger.info("%s registered as friendly entity.", friendlyClass);
             } else {
-                Log.info("Entity %s not registered, skipping", friendlyClass);
+                TargetingAPI.logger.info("Entity %s not registered, skipping", friendlyClass);
             }
         }
     }
