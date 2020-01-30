@@ -60,9 +60,9 @@ public class TargetingConfig {
             Class<? extends Entity> entityclass = EntityList.getClass(loc);
             if (entityclass != null){
                 farmAnimals.addMember(entityclass);
-                TargetingAPI.logger.info("Entity %s registered as farm animal.", farmAnimal);
+                TargetingAPI.logger.info("Entity {} registered as farm animal.", farmAnimal);
             } else {
-                TargetingAPI.logger.info("Entity %s not registered, skipping", farmAnimal);
+                TargetingAPI.logger.info("Entity {} not registered, skipping", farmAnimal);
             }
         }
     }
@@ -74,9 +74,9 @@ public class TargetingConfig {
             Class<? extends Entity> entityclass = EntityList.getClass(loc);
             if (entityclass != null){
                 Targeting.registerFriendlyEntity(entityclass.getName());
-                TargetingAPI.logger.info("%s registered as friendly entity.", friendlyClass);
+                TargetingAPI.logger.info("{} registered as friendly entity.", friendlyClass);
             } else {
-                TargetingAPI.logger.info("Entity %s not registered, skipping", friendlyClass);
+                TargetingAPI.logger.info("Entity {} not registered, skipping", friendlyClass);
             }
         }
     }
