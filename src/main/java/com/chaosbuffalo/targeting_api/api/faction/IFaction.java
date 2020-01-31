@@ -28,5 +28,7 @@ public interface IFaction {
     void addMemberClass(Class<? extends Entity> classToAdd);
     void clearMembers();
     boolean isMember(Class<? extends Entity> potentialMember);
+    boolean isMember(Entity potentialMember);
     boolean isFriend(Class<? extends Entity> potentialFriend);
+    boolean isFriend(Entity potentialFriend);
 }

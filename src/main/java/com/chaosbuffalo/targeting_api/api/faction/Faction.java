@@ -54,6 +54,11 @@ public class Faction implements IFaction {
     }
 
     @Override
+    public boolean isMember(Entity potentialMember){
+        return isMember(potentialMember.getClass());
+    }
+
+    @Override
     public boolean isFriend(Class<? extends Entity> potentialFriend){
         if (potentialFriend == null) return false;
         for (Class<? extends Entity> member : friendClasses){
@@ -62,5 +67,10 @@ public class Faction implements IFaction {
         }
 
         return false;
+    }
+
+    @Override
+    public boolean isFriend(Entity potentialFriend){
+        return isFriend(potentialFriend.getClass());
     }
 }
