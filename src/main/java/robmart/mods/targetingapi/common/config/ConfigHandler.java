@@ -15,7 +15,6 @@ public class ConfigHandler {
     {
         if (event.getModID().equals(Reference.MOD_ID)) {
             ConfigManager.sync(Reference.MOD_ID, Config.Type.INSTANCE);
-            TargetingConfig.registerFarmAnimals();
         }
     }
 }
