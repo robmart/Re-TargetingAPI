@@ -1,4 +1,11 @@
-package com.chaosbuffalo.targeting_api.api.reference;
+package com.chaosbuffalo.targeting_api.common;
+
+import com.chaosbuffalo.targeting_api.common.config.TargetingConfig;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+
+import java.io.File;
 
 /**
  * Created by Robmart.
@@ -19,12 +26,18 @@ package com.chaosbuffalo.targeting_api.api.reference;
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-public class Reference {
-    public static final String MOD_ID            = "targeting_api";
-    public static final String MOD_NAME          = "Targeting API";
-    public static final String MOD_VERSION       = "GRADLE:VERSION";
-    public static final String MINECRAFT_VERSION = "GRADLE:MCVERSION";
+public class CommonProxy {
+    private static File suggested;
 
-    public static final String COMMON_PROXY = "com.chaosbuffalo.targeting_api.common.CommonProxy";
-    public static final String CLIENT_PROXY = "com.chaosbuffalo.targeting_api.client.ClientProxy";
+    public void preInit(FMLPreInitializationEvent event) {
+        suggested = event.getSuggestedConfigurationFile();
+    }
+
+    public void init(FMLInitializationEvent event) {
+
+    }
+
+    public void postInit(FMLPostInitializationEvent event) {
+        TargetingConfig.init(suggested);
+    }
 }
