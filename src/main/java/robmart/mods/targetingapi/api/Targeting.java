@@ -197,8 +197,14 @@ public class Targeting {
      * @param target Target
      * @return Whether they are enemies or not
      */
-    public static boolean isValidEnemy(Entity caster, Entity target) { //TODO Proper enemies
-        return !isFriendly(caster, target);
+    public static boolean isValidEnemy(Entity caster, Entity target) {
+        if (isFriendly(caster, target)) return false;
+        for (IFaction faction : factionMap.values()) {
+            if (faction.isMember(caster) && faction.isEnemy(target))
+                return true;
+        }
+
+        return false;
     }
 
 }

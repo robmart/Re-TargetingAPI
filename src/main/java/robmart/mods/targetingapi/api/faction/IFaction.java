@@ -28,9 +28,13 @@ public interface IFaction {
     void addFriendEntity(Entity entityToAdd);
     void addMemberClass(Class<? extends Entity> classToAdd);
     void addMemberEntity(Entity entityToAdd);
+    void addEnemyClass(Class<? extends Entity> classToAdd);
+    void addEnemyEntity(Entity entityToAdd);
     void clearMembers();
     boolean isMember(Class<? extends Entity> potentialMember);
     boolean isMember(Entity potentialMember);
     boolean isFriend(Class<? extends Entity> potentialFriend);
     boolean isFriend(Entity potentialFriend);
+    boolean isEnemy(Class<? extends Entity> potentialEnemy);
+    boolean isEnemy(Entity potentialEnemy);
 }
