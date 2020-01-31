@@ -1,6 +1,4 @@
-package com.chaosbuffalo.targeting_api.api.faction;
-
-import net.minecraft.entity.Entity;
+package robmart.mods.targetingapi.api;
 
 /**
  * Created by Robmart.
@@ -21,16 +19,10 @@ import net.minecraft.entity.Entity;
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-public interface IFaction {
-
-    String getName();
-    void addFriendClass(Class<? extends Entity> classToAdd);
-    void addFriendEntity(Entity entityToAdd);
-    void addMemberClass(Class<? extends Entity> classToAdd);
-    void addMemberEntity(Entity entityToAdd);
-    void clearMembers();
-    boolean isMember(Class<? extends Entity> potentialMember);
-    boolean isMember(Entity potentialMember);
-    boolean isFriend(Class<? extends Entity> potentialFriend);
-    boolean isFriend(Entity potentialFriend);
+public enum TargetType {
+    ALL,
+    ENEMY,
+    FRIENDLY,
+    PLAYERS,
+    SELF,
 }

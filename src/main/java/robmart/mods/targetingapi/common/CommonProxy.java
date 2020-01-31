@@ -1,9 +1,9 @@
-package com.chaosbuffalo.targeting_api.common;
+package robmart.mods.targetingapi.common;
 
-import com.chaosbuffalo.targeting_api.api.Targeting;
-import com.chaosbuffalo.targeting_api.api.faction.IFaction;
-import com.chaosbuffalo.targeting_api.common.config.TargetingConfig;
-import com.chaosbuffalo.targeting_api.api.faction.Faction;
+import robmart.mods.targetingapi.api.Targeting;
+import robmart.mods.targetingapi.api.faction.IFaction;
+import robmart.mods.targetingapi.common.config.TargetingConfig;
+import robmart.mods.targetingapi.api.faction.Faction;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;

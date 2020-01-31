@@ -1,4 +1,4 @@
-package com.chaosbuffalo.targeting_api.api.faction;
+package robmart.mods.targetingapi.api.faction;
 
 import com.google.common.collect.Sets;
 import net.minecraft.entity.Entity;

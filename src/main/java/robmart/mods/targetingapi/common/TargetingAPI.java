@@ -1,6 +1,5 @@
-package com.chaosbuffalo.targeting_api.common;
+package robmart.mods.targetingapi.common;
 
-import com.chaosbuffalo.targeting_api.common.config.TargetingConfig;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -10,9 +9,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
-
-import static com.chaosbuffalo.targeting_api.api.reference.Reference.*;
+import static robmart.mods.targetingapi.api.reference.Reference.*;
 
 @Mod(modid = MOD_ID, name = MOD_NAME, version = MOD_VERSION)
 public class TargetingAPI {

@@ -1,6 +1,6 @@
-package com.chaosbuffalo.targeting_api.client;
+package robmart.mods.targetingapi.client;
 
-import com.chaosbuffalo.targeting_api.common.CommonProxy;
+import robmart.mods.targetingapi.common.CommonProxy;
 
 /**
  * Created by Robmart.

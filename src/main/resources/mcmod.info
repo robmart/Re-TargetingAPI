@@ -1,13 +1,13 @@
 [
 {
-  "modid": "targeting_api",
-  "name": "Targeting API",
+  "modid": "re-targeting_api",
+  "name": "Re-Targeting API",
   "description": "Mod for exposing a common targeting api.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["Kovak"],
+  "authorList": ["Kovak", "Robmart"],
   "credits": "The Forge and FML guys, Chaos Buffalo.",
   "logoFile": "",
   "screenshots": [],

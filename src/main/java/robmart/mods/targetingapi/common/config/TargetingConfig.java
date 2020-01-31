@@ -1,9 +1,9 @@
-package com.chaosbuffalo.targeting_api.common.config;
+package robmart.mods.targetingapi.common.config;
 
-import com.chaosbuffalo.targeting_api.api.faction.IFaction;
-import com.chaosbuffalo.targeting_api.api.reference.Reference;
-import com.chaosbuffalo.targeting_api.api.Targeting;
-import com.chaosbuffalo.targeting_api.common.TargetingAPI;
+import robmart.mods.targetingapi.api.faction.IFaction;
+import robmart.mods.targetingapi.api.reference.Reference;
+import robmart.mods.targetingapi.api.Targeting;
+import robmart.mods.targetingapi.common.TargetingAPI;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.util.ResourceLocation;

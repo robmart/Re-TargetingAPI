@@ -1,6 +1,6 @@
-package com.chaosbuffalo.targeting_api.api;
+package robmart.mods.targetingapi.api;
 
-import com.chaosbuffalo.targeting_api.api.faction.IFaction;
+import robmart.mods.targetingapi.api.faction.IFaction;
 import com.google.common.collect.Maps;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

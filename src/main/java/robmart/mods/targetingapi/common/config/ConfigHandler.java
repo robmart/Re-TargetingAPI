@@ -1,6 +1,6 @@
-package com.chaosbuffalo.targeting_api.common.config;
+package robmart.mods.targetingapi.common.config;
 
-import com.chaosbuffalo.targeting_api.api.reference.Reference;
+import robmart.mods.targetingapi.api.reference.Reference;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;

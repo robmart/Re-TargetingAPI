@@ -1,4 +1,6 @@
-package com.chaosbuffalo.targeting_api.api.reference;
+package robmart.mods.targetingapi.api.faction;
+
+import net.minecraft.entity.Entity;
 
 /**
  * Created by Robmart.
@@ -19,12 +21,16 @@ package com.chaosbuffalo.targeting_api.api.reference;
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-public class Reference {
-    public static final String MOD_ID            = "targeting_api";
-    public static final String MOD_NAME          = "Targeting API";
-    public static final String MOD_VERSION       = "GRADLE:VERSION";
-    public static final String MINECRAFT_VERSION = "GRADLE:MCVERSION";
+public interface IFaction {
 
-    public static final String COMMON_PROXY = "com.chaosbuffalo.targeting_api.common.CommonProxy";
-    public static final String CLIENT_PROXY = "com.chaosbuffalo.targeting_api.client.ClientProxy";
+    String getName();
+    void addFriendClass(Class<? extends Entity> classToAdd);
+    void addFriendEntity(Entity entityToAdd);
+    void addMemberClass(Class<? extends Entity> classToAdd);
+    void addMemberEntity(Entity entityToAdd);
+    void clearMembers();
+    boolean isMember(Class<? extends Entity> potentialMember);
+    boolean isMember(Entity potentialMember);
+    boolean isFriend(Class<? extends Entity> potentialFriend);
+    boolean isFriend(Entity potentialFriend);
 }
