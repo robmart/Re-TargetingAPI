@@ -1,5 +1,6 @@
 package robmart.mods.targetingapi.common;
 
+import net.minecraft.entity.passive.*;
 import robmart.mods.targetingapi.api.Targeting;
 import robmart.mods.targetingapi.api.faction.IFaction;
 import robmart.mods.targetingapi.common.config.TargetingConfig;
@@ -38,6 +39,20 @@ public class CommonProxy {
 
         IFaction animals = new Faction("FarmAnimals");
         animals.addFriendClass(EntityPlayer.class);
+        animals.addMemberClass(EntityCow.class);
+        animals.addMemberClass(EntitySheep.class);
+        animals.addMemberClass(EntityChicken.class);
+        animals.addMemberClass(EntityHorse.class);
+        animals.addMemberClass(EntityLlama.class);
+        animals.addMemberClass(EntityDonkey.class);
+        animals.addMemberClass(EntityMule.class);
+        animals.addMemberClass(EntityPig.class);
+        animals.addMemberClass(EntityParrot.class);
+        animals.addMemberClass(EntityRabbit.class);
+        animals.addMemberClass(EntityOcelot.class);
+        animals.addMemberClass(EntityWolf.class);
+        animals.addMemberClass(EntitySquid.class);
+        animals.addMemberClass(EntityMooshroom.class);
         Targeting.registerFaction(animals);
     }
 
