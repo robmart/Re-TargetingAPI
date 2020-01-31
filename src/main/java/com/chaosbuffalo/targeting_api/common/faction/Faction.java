@@ -47,7 +47,8 @@ public class Faction implements IFaction {
     public boolean isMember(Class<? extends Entity> potentialMember){
         if (potentialMember == null) return false;
         for (Class<? extends Entity> member : memberClasses){
-            return member.isAssignableFrom(potentialMember);
+            if (member.isAssignableFrom(potentialMember))
+                return true;
         }
 
         return false;
@@ -57,7 +58,8 @@ public class Faction implements IFaction {
     public boolean isFriend(Class<? extends Entity> potentialFriend){
         if (potentialFriend == null) return false;
         for (Class<? extends Entity> member : friendClasses){
-            return member.isAssignableFrom(potentialFriend);
+            if (member.isAssignableFrom(potentialFriend))
+                return true;
         }
 
         return false;
