@@ -24,7 +24,7 @@ ext.config = parseConfig(configFile)
 ext.priv = parseConfig(privFile)
 
 version = "${config.mc_version}-${config.mod_version}"
-group= "com.chaosbuffalo.targeting_api"
+group= "robmart.mods.targetingapi"
 archivesBaseName = config.mod_name
 
 sourceCompatibility = targetCompatibility = '1.8'
