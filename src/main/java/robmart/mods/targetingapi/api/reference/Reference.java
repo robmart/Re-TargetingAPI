@@ -25,6 +25,6 @@ public class Reference {
     public static final String MOD_VERSION       = "GRADLE:VERSION";
     public static final String MINECRAFT_VERSION = "GRADLE:MCVERSION";
 
-    public static final String COMMON_PROXY = "com.chaosbuffalo.targeting_api.common.CommonProxy";
-    public static final String CLIENT_PROXY = "com.chaosbuffalo.targeting_api.client.ClientProxy";
+    public static final String COMMON_PROXY = "robmart.mods.targetingapi.common.CommonProxy";
+    public static final String CLIENT_PROXY = "robmart.mods.targetingapi.client.ClientProxy";
 }
