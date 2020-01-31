@@ -1,6 +1,9 @@
 package com.chaosbuffalo.targeting_api.common;
 
+import com.chaosbuffalo.targeting_api.api.faction.IFaction;
 import com.chaosbuffalo.targeting_api.common.config.TargetingConfig;
+import com.chaosbuffalo.targeting_api.common.faction.Faction;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -31,6 +34,10 @@ public class CommonProxy {
 
     public void preInit(FMLPreInitializationEvent event) {
         suggested = event.getSuggestedConfigurationFile();
+
+        IFaction animals = new Faction("FarmAnimals");
+        animals.addFriendClass(EntityPlayer.class);
+        Targeting.registerFaction(animals);
     }
 
     public void init(FMLInitializationEvent event) {

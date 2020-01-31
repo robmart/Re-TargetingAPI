@@ -1,5 +1,6 @@
 package com.chaosbuffalo.targeting_api.common;
 import com.chaosbuffalo.targeting_api.api.TargetType;
+import com.chaosbuffalo.targeting_api.api.faction.IFaction;
 import com.chaosbuffalo.targeting_api.common.faction.Faction;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -24,15 +25,9 @@ public class Targeting {
 
     private static Set<BiFunction<Entity, Entity, Boolean>> friendlyCallbacks = Sets.newHashSet();
 
-    private static Set<Faction> factions = Sets.newHashSet();
+    private static Set<IFaction> factions = Sets.newHashSet();
 
-    private static Map<String, Faction> factionMap = Maps.newHashMap();
-
-    static {
-        Faction animals = new Faction("FarmAnimals");
-        animals.addFriendClass(EntityPlayer.class);
-        Targeting.registerFaction(animals);
-    }
+    private static Map<String, IFaction> factionMap = Maps.newHashMap();
 
     private static class Association {
         public Class Source;
@@ -44,12 +39,12 @@ public class Targeting {
         return first != null && second != null && first.getUniqueID().compareTo(second.getUniqueID()) == 0;
     }
 
-    public static void registerFaction(Faction newFaction){
+    public static void registerFaction(IFaction newFaction){
         factions.add(newFaction);
         factionMap.put(newFaction.getName(), newFaction);
     }
 
-    public static Faction getFaction(String factionName){
+    public static IFaction getFaction(String factionName){
         return factionMap.get(factionName);
     }
 
@@ -62,7 +57,7 @@ public class Targeting {
     }
 
     public static boolean isFriendlyWithPlayers(Entity target){
-        Faction farmAnimals = getFaction("FarmAnimals");
+        IFaction farmAnimals = getFaction("FarmAnimals");
         if (target instanceof EntityLiving){
             return isRegisteredFriendly(target) || farmAnimals.isMember(target.getClass()) ||
                     checkFriendlyLiving((EntityLiving) target) || isPlayerControlled(target);
@@ -229,7 +224,7 @@ public class Targeting {
     }
 
     private static boolean checkFactionFriends(Entity caster, Entity target){
-        for (Faction f : factions){
+        for (IFaction f : factions){
             if (f.isMember(target.getClass()) && f.isFriend(caster.getClass())){
                 return true;
             }
@@ -238,7 +233,7 @@ public class Targeting {
     }
 
     private static boolean checkFactionMembers(Entity caster, Entity target){
-        for (Faction f : factions){
+        for (IFaction f : factions){
             if (f.isMember(target.getClass()) && f.isMember(caster.getClass())) {
                 return true;
             }
