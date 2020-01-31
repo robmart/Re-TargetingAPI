@@ -1,4 +1,4 @@
-package com.chaosbuffalo.targeting_api.common;
+package com.chaosbuffalo.targeting_api.api;
 import com.chaosbuffalo.targeting_api.api.TargetType;
 import com.chaosbuffalo.targeting_api.api.faction.IFaction;
 import com.google.common.collect.Maps;

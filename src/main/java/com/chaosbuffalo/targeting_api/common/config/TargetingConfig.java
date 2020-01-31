@@ -2,7 +2,7 @@ package com.chaosbuffalo.targeting_api.common.config;
 
 import com.chaosbuffalo.targeting_api.api.faction.IFaction;
 import com.chaosbuffalo.targeting_api.api.reference.Reference;
-import com.chaosbuffalo.targeting_api.common.Targeting;
+import com.chaosbuffalo.targeting_api.api.Targeting;
 import com.chaosbuffalo.targeting_api.common.TargetingAPI;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;

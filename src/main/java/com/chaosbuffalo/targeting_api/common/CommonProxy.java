@@ -1,5 +1,6 @@
 package com.chaosbuffalo.targeting_api.common;
 
+import com.chaosbuffalo.targeting_api.api.Targeting;
 import com.chaosbuffalo.targeting_api.api.faction.IFaction;
 import com.chaosbuffalo.targeting_api.common.config.TargetingConfig;
 import com.chaosbuffalo.targeting_api.api.faction.Faction;
