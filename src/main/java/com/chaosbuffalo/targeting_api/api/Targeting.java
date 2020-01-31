@@ -1,20 +1,14 @@
 package com.chaosbuffalo.targeting_api.api;
-import com.chaosbuffalo.targeting_api.api.TargetType;
+
 import com.chaosbuffalo.targeting_api.api.faction.IFaction;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityOwnable;
-import net.minecraft.entity.monster.EntityIronGolem;
-import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.scoreboard.Team;
 
 import java.util.Map;
-import java.util.Set;
-import java.util.function.BiFunction;
 
 public class Targeting {
 
