@@ -107,9 +107,9 @@ public class Targeting {
     }
 
     /**
-     * Checks if the rideable entity is owned
-     * @param target The rideable entity
-     * @return Whether the rideable entity is owned
+     * Checks if the rideable/ownable entity is owned
+     * @param target The rideable/ownable entity
+     * @return Whether the rideable/ownable entity is owned
      */
     public static boolean isPlayerControlled(Entity target) {
         Entity controller = target.getControllingPassenger();
@@ -127,10 +127,10 @@ public class Targeting {
     }
 
     /**
-     * Checks if rideable entity is friendly with rider
-     * @param caster The rider
-     * @param target The rideable entity
-     * @return Whether rideable entity is friendly with rider
+     * Checks if rideable/ownable entity is friendly with rider
+     * @param caster The rider/owner
+     * @param target The rideable/ownable entity
+     * @return Whether rideable/ownable entity is friendly with rider
      */
     public static boolean isFriendlyPlayerControlled(Entity caster, Entity target) {
         Entity controller = target.getControllingPassenger();

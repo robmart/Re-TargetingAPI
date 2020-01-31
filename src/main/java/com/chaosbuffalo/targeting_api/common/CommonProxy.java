@@ -41,9 +41,7 @@ public class CommonProxy {
         Targeting.registerFaction(animals);
     }
 
-    public void init(FMLInitializationEvent event) {
-
-    }
+    public void init(FMLInitializationEvent event) { }
 
     public void postInit(FMLPostInitializationEvent event) {
         TargetingConfig.init(suggested);
