@@ -2,7 +2,7 @@ package com.chaosbuffalo.targeting_api.common;
 
 import com.chaosbuffalo.targeting_api.api.faction.IFaction;
 import com.chaosbuffalo.targeting_api.common.config.TargetingConfig;
-import com.chaosbuffalo.targeting_api.common.faction.Faction;
+import com.chaosbuffalo.targeting_api.api.faction.Faction;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;

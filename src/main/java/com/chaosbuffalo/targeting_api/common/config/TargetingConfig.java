@@ -1,9 +1,9 @@
 package com.chaosbuffalo.targeting_api.common.config;
 
+import com.chaosbuffalo.targeting_api.api.faction.IFaction;
 import com.chaosbuffalo.targeting_api.api.reference.Reference;
 import com.chaosbuffalo.targeting_api.common.Targeting;
 import com.chaosbuffalo.targeting_api.common.TargetingAPI;
-import com.chaosbuffalo.targeting_api.common.faction.Faction;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.util.ResourceLocation;
@@ -14,14 +14,6 @@ import java.io.File;
 
 @Config(modid = Reference.MOD_ID, category = "gameplay")
 public class TargetingConfig {
-
-    @Config.Comment("Registry Names for Friendly Entities")
-    public static String[] FRIENDLY_ENTITIES = {
-            "elementalmobs:nymph",
-            "elementalmobs:wisp",
-            "mowziesmobs:lantern",
-            "lootablebodies:corpse"
-    };
 
     @Config.Comment("Registry Names for Farm Animals")
     public static String[] FARM_ANIMALS = {
@@ -48,7 +40,6 @@ public class TargetingConfig {
         } catch (Exception e) {
             TargetingAPI.logger.info("Error loading config, returning to default variables.");
         } finally {
-            TargetingConfig.registerFriendlyEntities();
             TargetingConfig.registerFarmAnimals();
             if (config.hasChanged())
                 config.save();
@@ -56,7 +47,7 @@ public class TargetingConfig {
     }
 
     public static void registerFarmAnimals(){
-        Faction farmAnimals = Targeting.getFaction("FarmAnimals");
+        IFaction farmAnimals = Targeting.getFaction("FarmAnimals");
         farmAnimals.clearMembers();
         for (String farmAnimal : FARM_ANIMALS){
             ResourceLocation loc = new ResourceLocation(farmAnimal);
@@ -66,20 +57,6 @@ public class TargetingConfig {
                 TargetingAPI.logger.info("Entity {} registered as farm animal.", farmAnimal);
             } else {
                 TargetingAPI.logger.info("Entity {} not registered, skipping", farmAnimal);
-            }
-        }
-    }
-
-    public static void registerFriendlyEntities(){
-        Targeting.clearFriendlyEntities();
-        for (String friendlyClass : FRIENDLY_ENTITIES){
-            ResourceLocation loc = new ResourceLocation(friendlyClass);
-            Class<? extends Entity> entityclass = EntityList.getClass(loc);
-            if (entityclass != null){
-                Targeting.registerFriendlyEntity(entityclass.getName());
-                TargetingAPI.logger.info("{} registered as friendly entity.", friendlyClass);
-            } else {
-                TargetingAPI.logger.info("Entity {} not registered, skipping", friendlyClass);
             }
         }
     }

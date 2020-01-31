@@ -1,6 +1,5 @@
-package com.chaosbuffalo.targeting_api.common.faction;
+package com.chaosbuffalo.targeting_api.api.faction;
 
-import com.chaosbuffalo.targeting_api.api.faction.IFaction;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.Entity;
 
