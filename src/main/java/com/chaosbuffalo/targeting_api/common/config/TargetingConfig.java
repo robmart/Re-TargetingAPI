@@ -16,7 +16,7 @@ import java.io.File;
 public class TargetingConfig {
 
     @Config.Comment("Registry Names for Farm Animals")
-    public static String[] FARM_ANIMALS = {
+    public static String[] FARM_ANIMALS = { //TODO: No
             "minecraft:cow",
             "minecraft:sheep",
             "minecraft:chicken",

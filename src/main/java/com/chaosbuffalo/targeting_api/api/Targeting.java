@@ -162,9 +162,9 @@ public class Targeting {
      * @param target The target being evaluated
      * @return Whether caster's faction is friends with target
      */
-    public static boolean checkFactionFriends(Entity caster, Entity target){//TODO Individual
+    public static boolean checkFactionFriends(Entity caster, Entity target){
         for (IFaction faction : factionMap.values()){
-            if (faction.isMember(target) && faction.isFriend(caster)){
+            if (faction.isMember(caster) && faction.isFriend(target)){
                 return true;
             }
         }

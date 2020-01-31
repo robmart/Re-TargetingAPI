@@ -9,12 +9,14 @@ import java.util.Set;
  * Created by Jacob on 4/19/2018.
  */
 public class Faction implements IFaction {
-    //TODO: Enemies, Remove friends/members/enemies, Individual friends/members/enemies
+    //TODO: Enemies, Remove friends/members/enemies, Individual enemies
 
     private String name;
 
     private Set<Class<? extends Entity>> memberClasses = Sets.newHashSet();
     private Set<Class<? extends Entity>> friendClasses = Sets.newHashSet();
+    private Set<Entity> memberEntities = Sets.newHashSet();
+    private Set<Entity> friendEntities = Sets.newHashSet();
 
     public Faction(String name) {
         this.name = name;
@@ -32,9 +34,21 @@ public class Faction implements IFaction {
     }
 
     @Override
+    public void addFriendEntity(Entity entityToAdd) {
+        if (!isFriend(entityToAdd))
+            friendEntities.add(entityToAdd);
+    }
+
+    @Override
     public void addMemberClass(Class<? extends Entity> classToAdd){
         if (!isMember(classToAdd))
             memberClasses.add(classToAdd);
+    }
+
+    @Override
+    public void addMemberEntity(Entity entityToAdd){
+        if (!isMember(entityToAdd))
+            memberEntities.add(entityToAdd);
     }
 
     @Override
@@ -55,7 +69,12 @@ public class Faction implements IFaction {
 
     @Override
     public boolean isMember(Entity potentialMember){
-        return isMember(potentialMember.getClass());
+        if (isMember(potentialMember.getClass())) return true;
+        for (Entity entity : memberEntities) {
+            if (entity.equals(potentialMember)) return true;
+        }
+
+        return false;
     }
 
     @Override
@@ -71,6 +90,11 @@ public class Faction implements IFaction {
 
     @Override
     public boolean isFriend(Entity potentialFriend){
-        return isFriend(potentialFriend.getClass());
+        if (isFriend(potentialFriend.getClass())) return true;
+        for (Entity entity : friendEntities) {
+            if (entity.equals(potentialFriend)) return true;
+        }
+
+        return false;
     }
 }

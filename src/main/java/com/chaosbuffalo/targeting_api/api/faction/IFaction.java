@@ -25,7 +25,9 @@ public interface IFaction {
 
     String getName();
     void addFriendClass(Class<? extends Entity> classToAdd);
+    void addFriendEntity(Entity entityToAdd);
     void addMemberClass(Class<? extends Entity> classToAdd);
+    void addMemberEntity(Entity entityToAdd);
     void clearMembers();
     boolean isMember(Class<? extends Entity> potentialMember);
     boolean isMember(Entity potentialMember);
