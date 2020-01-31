@@ -10,8 +10,6 @@ import java.util.Set;
  * Remade by Robmart on 1/30/2020
  */
 public class Faction implements IFaction {
-    //TODO: Remove friends/members/enemies
-
     private String name;
 
     private Set<Class<? extends Entity>> memberClasses = Sets.newHashSet();
@@ -43,6 +41,18 @@ public class Faction implements IFaction {
     }
 
     @Override
+    public void removeFriendClass(Class<? extends Entity> classToRemove) {
+        if (isFriend(classToRemove))
+            friendClasses.remove(classToRemove);
+    }
+
+    @Override
+    public void removeFriendEntity(Entity entityToRemove) {
+        if (isFriend(entityToRemove))
+            friendEntities.remove(entityToRemove);
+    }
+
+    @Override
     public void addMemberClass(Class<? extends Entity> classToAdd){
         if (!isMember(classToAdd))
             memberClasses.add(classToAdd);
@@ -52,6 +62,18 @@ public class Faction implements IFaction {
     public void addMemberEntity(Entity entityToAdd){
         if (!isMember(entityToAdd))
             memberEntities.add(entityToAdd);
+    }
+
+    @Override
+    public void removeMemberClass(Class<? extends Entity> classToRemove) {
+        if (isMember(classToRemove))
+            memberClasses.remove(classToRemove);
+    }
+
+    @Override
+    public void removeMemberEntity(Entity entityToRemove) {
+        if (isMember(entityToRemove))
+            memberEntities.remove(entityToRemove);
     }
 
     @Override
@@ -67,8 +89,33 @@ public class Faction implements IFaction {
     }
 
     @Override
+    public void removeEnemyClass(Class<? extends Entity> classToRemove) {
+        if (isEnemy(classToRemove))
+            enemyClasses.remove(classToRemove);
+    }
+
+    @Override
+    public void removeEnemyEntity(Entity entityToRemove) {
+        if (isEnemy(entityToRemove))
+            enemyEntities.remove(entityToRemove);
+    }
+
+    @Override
     public void clearMembers(){
         memberClasses.clear();
+        memberEntities.clear();
+    }
+
+    @Override
+    public void clearFriends() {
+        friendClasses.clear();
+        friendEntities.clear();
+    }
+
+    @Override
+    public void clearEnemies() {
+        enemyClasses.clear();
+        enemyEntities.clear();
     }
 
     @Override
