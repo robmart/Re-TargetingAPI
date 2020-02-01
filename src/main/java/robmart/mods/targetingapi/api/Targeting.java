@@ -1,13 +1,15 @@
 package robmart.mods.targetingapi.api;
 
-import robmart.mods.targetingapi.api.faction.IFaction;
 import com.google.common.collect.Maps;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityOwnable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.scoreboard.Team;
+import robmart.mods.targetingapi.api.faction.IFaction;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Targeting {
@@ -29,6 +31,15 @@ public class Targeting {
      */
     public static IFaction getFaction(String factionName){
         return factionMap.get(factionName);
+    }
+
+    public static List<IFaction> getFactionsFromEntity(Entity entity) {
+        List<IFaction> factionList = new ArrayList<>();
+        for (IFaction faction : factionMap.values()) {
+            if (faction.isMember(entity))
+                factionList.add(faction);
+        }
+        return factionList;
     }
 
     /**
