@@ -21,6 +21,7 @@ public class Targeting {
      * @param newFaction The faction that should be registered
      */
     public static void registerFaction(IFaction newFaction){
+        //TODO: Names should be unique
         factionMap.put(newFaction.getName(), newFaction);
     }
 
