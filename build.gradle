@@ -69,18 +69,19 @@ processResources {
     }
 }
 
-task sourcesJar(type: Jar, dependsOn: 'sourceMainJava') {
-    from "build/sources/java"
-    from "build/resources/main/java"
-    classifier "sources"
+task srcJar(type: Jar) {
+    from(sourceSets.main.java)
+    classifier = 'sources'
+    archiveName = "${baseName}-${version}-sources.jar"
 }
 
 task deobfJar(type: Jar, dependsOn: 'jar') {
     from "build/source/main"
     classifier "dev"
 }
+
 artifacts {
-    archives sourcesJar, deobfJar
+    archives srcJar, deobfJar
 }
 
 
@@ -94,8 +95,7 @@ curseforge {
         releaseType = 'release'
 
         mainArtifact jar
-        addArtifact sourcesJar
-        addArtifact deobfJar
+        addArtifact srcJar
     }
     options {
         debug = false
