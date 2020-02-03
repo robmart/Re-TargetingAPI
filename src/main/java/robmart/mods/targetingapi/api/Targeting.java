@@ -21,6 +21,10 @@ public class Targeting {
      * @param newFaction The faction that should be registered
      */
     public static void registerFaction(IFaction newFaction){
+        for (String name : factionMap.keySet()) {
+            if (name.equals(newFaction.getName()))
+                return;
+        }
         factionMap.put(newFaction.getName(), newFaction);
     }
 

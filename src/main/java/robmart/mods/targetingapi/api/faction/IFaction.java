@@ -2,6 +2,8 @@ package robmart.mods.targetingapi.api.faction;
 
 import net.minecraft.entity.Entity;
 
+import java.util.Set;
+
 /**
  * Created by Robmart.
  * <p>
@@ -36,6 +38,9 @@ public interface IFaction {
     void addEnemyEntity(Entity entityToAdd);
     void removeEnemyClass(Class<? extends Entity> classToRemove);
     void removeEnemyEntity(Entity entityToRemove);
+    Set<Object> getAllMembers();
+    Set<Object> getAllFriends();
+    Set<Object> getAllEnemies();
     void clearMembers();
     void clearFriends();
     void clearEnemies();
