@@ -1,14 +1,15 @@
 package robmart.mods.targetingapi.common;
 
 import net.minecraft.entity.passive.*;
+import net.minecraft.entity.passive.horse.DonkeyEntity;
+import net.minecraft.entity.passive.horse.HorseEntity;
+import net.minecraft.entity.passive.horse.LlamaEntity;
+import net.minecraft.entity.passive.horse.MuleEntity;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import robmart.mods.targetingapi.api.Targeting;
 import robmart.mods.targetingapi.api.faction.IFaction;
-import robmart.mods.targetingapi.common.config.TargetingConfig;
 import robmart.mods.targetingapi.api.faction.Faction;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraft.entity.player.PlayerEntity;
 
 import java.io.File;
 
@@ -32,33 +33,24 @@ import java.io.File;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 public class CommonProxy {
-    private static File suggested;
 
-    public void preInit(FMLPreInitializationEvent event) {
-        suggested = event.getSuggestedConfigurationFile();
-
+    public void commonSetup(final FMLCommonSetupEvent event) {
         IFaction animals = new Faction("FarmAnimals");
-        animals.addFriendClass(EntityPlayer.class);
-        animals.addMemberClass(EntityCow.class);
-        animals.addMemberClass(EntitySheep.class);
-        animals.addMemberClass(EntityChicken.class);
-        animals.addMemberClass(EntityHorse.class);
-        animals.addMemberClass(EntityLlama.class);
-        animals.addMemberClass(EntityDonkey.class);
-        animals.addMemberClass(EntityMule.class);
-        animals.addMemberClass(EntityPig.class);
-        animals.addMemberClass(EntityParrot.class);
-        animals.addMemberClass(EntityRabbit.class);
-        animals.addMemberClass(EntityOcelot.class);
-        animals.addMemberClass(EntityWolf.class);
-        animals.addMemberClass(EntitySquid.class);
-        animals.addMemberClass(EntityMooshroom.class);
+        animals.addFriendClass(PlayerEntity.class);
+        animals.addMemberClass(CowEntity.class);
+        animals.addMemberClass(SheepEntity.class);
+        animals.addMemberClass(ChickenEntity.class);
+        animals.addMemberClass(HorseEntity.class);
+        animals.addMemberClass(LlamaEntity.class);
+        animals.addMemberClass(DonkeyEntity.class);
+        animals.addMemberClass(MuleEntity.class);
+        animals.addMemberClass(PigEntity.class);
+        animals.addMemberClass(ParrotEntity.class);
+        animals.addMemberClass(RabbitEntity.class);
+        animals.addMemberClass(OcelotEntity.class);
+        animals.addMemberClass(WolfEntity.class);
+        animals.addMemberClass(SquidEntity.class);
+        animals.addMemberClass(MooshroomEntity.class);
         Targeting.registerFaction(animals);
-    }
-
-    public void init(FMLInitializationEvent event) { }
-
-    public void postInit(FMLPostInitializationEvent event) {
-        TargetingConfig.init(suggested);
     }
 }

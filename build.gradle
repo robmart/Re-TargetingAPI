@@ -1,21 +1,23 @@
 buildscript {
     repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
         jcenter()
-        maven {
-            url = "http://files.minecraftforge.net/maven"
-        }
+        mavenCentral()
         maven {
             url = "https://plugins.gradle.org/m2/"
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
         classpath "gradle.plugin.com.matthewprenger:CurseGradle:1.4.0"
         classpath "com.wynprice.cursemaven:CurseMaven:2.1.1"
     }
 }
 
-apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+
 apply plugin: "com.matthewprenger.cursegradle"
 apply plugin: "com.wynprice.cursemaven"
 
@@ -28,77 +30,98 @@ ext.priv = parseConfig(privFile)
 version = "${config.mc_version}-${config.mod_version}"
 group= "robmart.mods.targetingapi"
 archivesBaseName = config.mod_name
+author = config.author
 
-sourceCompatibility = targetCompatibility = '1.8'
-compileJava {
-    sourceCompatibility = targetCompatibility = '1.8'
-}
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    version = "${mc_version}-${forge_version}"
-    runDir = "run"
+    mappings channel: 'snapshot', version: '20200225-1.15.1'
 
-    if (project.hasProperty('mappings_version'))
-        mappings = project.mappings_version
+    //makeObfSourceJar = true //throws error
 
-    replace 'GRADLE:BUILD', config.build_number
-    replace 'GRADLE:VERSION', this.version
-    replace 'GRADLE:MCVERSION', config.mod_version
+    runs {
+        client {
+            workingDirectory project.file('run')
 
-    replaceIn 'Reference.java'
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
 
-    useDepAts = true
-    makeObfSourceJar = true
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                TargetingAPI {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('runServer')
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                TargetingAPI {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/')
+
+            mods {
+                TargetingAPI {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
 }
 
 dependencies {
+    minecraft 'net.minecraftforge:forge:1.15.2-31.1.41'
 }
 
 processResources {
     inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
 
     from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
+        include 'mods.toml'
 
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+        expand 'version':project.version
     }
 
     from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+        exclude 'mods.toml'
     }
 }
 
-task srcJar(type: Jar) {
-    from(sourceSets.main.java)
-    classifier = 'sources'
-    archiveName = "${baseName}-${version}-sources.jar"
-}
-
-task deobfJar(type: Jar, dependsOn: 'jar') {
-    from "build/source/main"
-    classifier "dev"
-}
-
-artifacts {
-    archives srcJar, deobfJar
-}
-
-
-curseforge {
-    if (priv == null) return
-    apiKey = priv.curseforge_api_key
-
-    project {
-        id = '360655'
-        changelog = 'Changes'
-        releaseType = 'release'
-
-        mainArtifact jar
-        addArtifact srcJar
-    }
-    options {
-        debug = false
+// Example for how to get properties into the manifest for reading by the runtime..
+jar {
+    manifest {
+        attributes([
+                "Specification-Title": "${config.mod_name}",
+                "Specification-Vendor": "${config.author}",
+                "Specification-Version": "${config.mod_version}",
+                "Implementation-Title": project.name,
+                "Implementation-Version": "${config.mod_version}",
+                "Implementation-Vendor": "${config.author}",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
     }
 }
 
@@ -113,5 +136,3 @@ def parseConfig(File config) {
         return null
     }
 }
-
-defaultTasks 'clean', 'build', 'incrementBuildNumber', 'curseforge'

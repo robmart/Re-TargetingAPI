@@ -2,9 +2,9 @@ package robmart.mods.targetingapi.api;
 
 import com.google.common.collect.Maps;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IEntityOwnable;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.scoreboard.Team;
 import robmart.mods.targetingapi.api.faction.IFaction;
 
@@ -58,22 +58,22 @@ public class Targeting {
         if (caster == null || target == null) {
             return false;
         }
-        if (!(target instanceof EntityLivingBase)){
+        if (!(target instanceof LivingEntity)){
             return false;
         }
         if (excludeCaster && caster.equals(target)) {
             return false;
         }
         // Targets should be alive
-        if (!target.isEntityAlive())
+        if (!target.isAlive())
             return false;
 
         // Ignore spectators
-        if (target instanceof EntityPlayer && ((EntityPlayer) target).isSpectator())
+        if (target instanceof PlayerEntity && ((PlayerEntity) target).isSpectator())
             return false;
 
         // Ignore Creative Mode players
-        if (target instanceof EntityPlayer && ((EntityPlayer) target).isCreative())
+        if (target instanceof PlayerEntity && ((PlayerEntity) target).isCreative())
             return false;
 
         switch (type) {
@@ -82,7 +82,7 @@ public class Targeting {
             case SELF:
                 return caster.equals(target);
             case PLAYERS:
-                return target instanceof EntityPlayer;
+                return target instanceof PlayerEntity;
             case FRIENDLY:
                 return isFriendly(caster, target);
             case ENEMY:
@@ -122,11 +122,11 @@ public class Targeting {
      */
     public static boolean isPlayerControlled(Entity target) {
         Entity controller = target.getControllingPassenger();
-        if (controller instanceof EntityPlayer) {
+        if (controller instanceof PlayerEntity) {
             return true;
         }
-        if (target instanceof IEntityOwnable) {
-            IEntityOwnable ownable = (IEntityOwnable) target;
+        if (target instanceof TameableEntity) {
+            TameableEntity ownable = (TameableEntity) target;
             // Entity is owned, but the owner is offline
             // If the owner if offline then there's not much we can do.
             // Returning false for right now due to Lycanites AI quirks
@@ -143,12 +143,12 @@ public class Targeting {
      */
     public static boolean isFriendlyPlayerControlled(Entity caster, Entity target) {
         Entity controller = target.getControllingPassenger();
-        if (controller instanceof EntityPlayer) {
+        if (controller instanceof PlayerEntity) {
             return isFriendly(caster, controller);
         }
 
-        if (target instanceof IEntityOwnable) {
-            IEntityOwnable ownable = (IEntityOwnable) target;
+        if (target instanceof TameableEntity) {
+            TameableEntity ownable = (TameableEntity) target;
 
             Entity owner = ownable.getOwner();
             if (owner != null) {

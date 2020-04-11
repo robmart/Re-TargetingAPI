@@ -1,0 +1,17 @@
+modLoader="javafml" #mandatory
+loaderVersion="[31,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+issueTrackerURL="https://github.com/robmart/Re-TargetingAPI/issues" #optional
+
+[[mods]]
+modId="re-targeting_api" #mandatory
+version="${file.jarVersion}" #mandatory
+displayName="Re-TargetingAPI" #mandatory
+# A URL to query for updates for this mod. See the JSON update specification <here>
+# updateJSONURL="http://myurl.me/" #optional
+displayURL="https://www.curseforge.com/minecraft/mc-mods/re-targetingapi/" #optional
+logoFile="examplemod.png" #optional
+credits="The Forge and FML guys, Chaos Buffalo" #optional
+authors="Chaos Buffalo, Robmart" #optional
+description='''
+Mod for exposing a common targeting api.
+'''
