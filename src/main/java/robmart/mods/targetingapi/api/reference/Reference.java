@@ -21,10 +21,4 @@ package robmart.mods.targetingapi.api.reference;
  */
 public class Reference {
     public static final String MOD_ID            = "re-targeting_api";
-    public static final String MOD_NAME          = "Re-Targeting API";
-    public static final String MOD_VERSION       = "GRADLE:VERSION";
-    public static final String MINECRAFT_VERSION = "GRADLE:MCVERSION";
-
-    public static final String COMMON_PROXY = "robmart.mods.targetingapi.common.CommonProxy";
-    public static final String CLIENT_PROXY = "robmart.mods.targetingapi.client.ClientProxy";
 }
