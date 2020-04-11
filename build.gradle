@@ -125,6 +125,12 @@ jar {
     }
 }
 
+task srcJar(type: Jar) {
+    from(sourceSets.main.java)
+    classifier = 'sources'
+    archiveName = "${baseName}-${version}-sources.jar"
+}
+
 curseforge {
     if (priv == null) return
     apiKey = priv.curseforge_api_key

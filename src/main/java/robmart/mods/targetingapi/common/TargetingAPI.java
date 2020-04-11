@@ -23,8 +23,8 @@ public class TargetingAPI {
     public TargetingAPI() {
         instance = this;
         proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
 
-        MinecraftForge.EVENT_BUS.register(this);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigHandler.CLIENT_SPEC);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigHandler.COMMON_SPEC);
     }
@@ -33,7 +33,6 @@ public class TargetingAPI {
 
     public static final Logger logger = LogManager.getLogger(MOD_ID.toUpperCase());
 
-    @SubscribeEvent
     public void commonSetup(final FMLCommonSetupEvent event) {
         proxy.commonSetup(event);
     }

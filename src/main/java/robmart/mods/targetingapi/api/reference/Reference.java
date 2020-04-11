@@ -21,6 +21,4 @@ package robmart.mods.targetingapi.api.reference;
  */
 public class Reference {
     public static final String MOD_ID            = "re-targeting_api";
-    public static final String MOD_NAME          = "Re-Targeting API";
-    public static final String MOD_VERSION       = "GRADLE:VERSION";
 }
