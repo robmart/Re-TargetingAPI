@@ -125,6 +125,23 @@ jar {
     }
 }
 
+curseforge {
+    if (priv == null) return
+    apiKey = priv.curseforge_api_key
+
+    project {
+        id = '360655'
+        changelog = 'Changes'
+        releaseType = 'release'
+
+        mainArtifact jar
+        addArtifact srcJar
+    }
+    options {
+        debug = false
+    }
+}
+
 def parseConfig(File config) {
     if(config.exists()){
         config.withReader {
