@@ -6,10 +6,12 @@ import net.minecraft.entity.passive.horse.HorseEntity;
 import net.minecraft.entity.passive.horse.LlamaEntity;
 import net.minecraft.entity.passive.horse.MuleEntity;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import robmart.mods.targetingapi.api.Targeting;
 import robmart.mods.targetingapi.api.faction.IFaction;
 import robmart.mods.targetingapi.api.faction.Faction;
 import net.minecraft.entity.player.PlayerEntity;
+import robmart.mods.targetingapi.common.commands.CommandFactions;
 
 import java.io.File;
 
@@ -53,5 +55,9 @@ public class CommonProxy {
         animals.addMemberClass(SquidEntity.class);
         animals.addMemberClass(MooshroomEntity.class);
         Targeting.registerFaction(animals);
+    }
+
+    public void serverStarting(FMLServerStartingEvent event) {
+        CommandFactions.register(event.getCommandDispatcher());
     }
 }
