@@ -31,9 +31,7 @@ public class DebugMenuGui extends AbstractGui {
             return !p_217727_0_.isSpectator() && p_217727_0_.canBeCollidedWith();
         };
         EntityRayTraceResult entityraytraceresult = ProjectileHelper.rayTraceEntities(entityIn, vec3d, vec3d2, axisalignedbb, predicate, (double)distance * distance);
-        if (entityraytraceresult == null) {
-            return;
-        } else {
+        if (entityraytraceresult != null) {
             for (int i = 0; i < event.getRight().size(); i++) {
                 if (event.getRight().get(i).contains("Targeted Entity")) {
                     if (event.getRight().get(i + 1) != null) {
