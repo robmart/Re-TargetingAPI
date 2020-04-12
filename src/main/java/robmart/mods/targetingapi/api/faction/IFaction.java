@@ -1,6 +1,7 @@
 package robmart.mods.targetingapi.api.faction;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.world.storage.WorldSavedData;
 
 import java.util.Set;
 
