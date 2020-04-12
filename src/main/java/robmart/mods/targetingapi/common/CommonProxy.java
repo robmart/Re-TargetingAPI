@@ -35,6 +35,7 @@ import java.io.File;
 public class CommonProxy {
 
     public void commonSetup(final FMLCommonSetupEvent event) {
+
         IFaction animals = new Faction("FarmAnimals", true);
         animals.addFriendClass(PlayerEntity.class);
         animals.addMemberClass(CowEntity.class);

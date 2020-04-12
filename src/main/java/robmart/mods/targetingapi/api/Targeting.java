@@ -1,5 +1,6 @@
 package robmart.mods.targetingapi.api;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -9,12 +10,20 @@ import net.minecraft.scoreboard.Team;
 import robmart.mods.targetingapi.api.faction.IFaction;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Targeting {
 
-    private static Map<String, IFaction> factionMap = Maps.newHashMap();
+    private static HashMap<String, IFaction> factionMap = Maps.newHashMap();
+
+    /**
+     * Gets an immutable shallow copy of the faction map
+     */
+    public static ImmutableMap<String, IFaction> getFactionMap() {
+        return ImmutableMap.copyOf(factionMap);
+    }
 
     /**
      * Register a new faction
