@@ -2,6 +2,10 @@ package robmart.mods.targetingapi.api.faction;
 
 import com.google.common.collect.Sets;
 import net.minecraft.entity.Entity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.World;
+import net.minecraft.world.storage.WorldSavedData;
+import robmart.mods.targetingapi.api.reference.Reference;
 
 import java.util.Set;
 
@@ -9,18 +13,25 @@ import java.util.Set;
  * Created by Jacob on 4/19/2018.
  * Remade by Robmart on 1/30/2020
  */
-public class Faction implements IFaction {
-    private String name;
+public class Faction extends WorldSavedData implements IFaction {
+    private final String name;
+    private final boolean isPermanent;
 
-    private Set<Class<? extends Entity>> memberClasses = Sets.newHashSet();
-    private Set<Class<? extends Entity>> friendClasses = Sets.newHashSet();
-    private Set<Class<? extends Entity>> enemyClasses = Sets.newHashSet();
-    private Set<Entity> memberEntities = Sets.newHashSet();
-    private Set<Entity> friendEntities = Sets.newHashSet();
-    private Set<Entity> enemyEntities = Sets.newHashSet();
+    private final Set<Class<? extends Entity>> memberClasses = Sets.newHashSet();
+    private final Set<Class<? extends Entity>> friendClasses = Sets.newHashSet();
+    private final Set<Class<? extends Entity>> enemyClasses = Sets.newHashSet();
+    private final Set<Entity> memberEntities = Sets.newHashSet();
+    private final Set<Entity> friendEntities = Sets.newHashSet();
+    private final Set<Entity> enemyEntities = Sets.newHashSet();
 
     public Faction(String name) {
+        this(name, false);
+    }
+
+    public Faction(String name, boolean permanent) {
+        super(Reference.MOD_ID +  "_Faction_" + name);
         this.name = name;
+        this.isPermanent = permanent;
     }
 
     @Override
@@ -29,75 +40,104 @@ public class Faction implements IFaction {
     }
 
     @Override
+    public boolean getIsPermanent() {
+        return this.isPermanent;
+    }
+
+    @Override
     public void addFriendClass(Class<? extends Entity> classToAdd) {
         if (!isFriend(classToAdd))
             this.friendClasses.add(classToAdd);
+
+        markDirty();
     }
 
     @Override
     public void addFriendEntity(Entity entityToAdd) {
         if (!isFriend(entityToAdd))
             this.friendEntities.add(entityToAdd);
+
+        markDirty();
     }
 
     @Override
     public void removeFriendClass(Class<? extends Entity> classToRemove) {
         if (isFriend(classToRemove))
             this.friendClasses.remove(classToRemove);
+
+        markDirty();
     }
 
     @Override
     public void removeFriendEntity(Entity entityToRemove) {
         if (isFriend(entityToRemove))
             this.friendEntities.remove(entityToRemove);
+
+        markDirty();
     }
 
     @Override
     public void addMemberClass(Class<? extends Entity> classToAdd){
         if (!isMember(classToAdd))
             this.memberClasses.add(classToAdd);
+
+        markDirty();
     }
 
     @Override
     public void addMemberEntity(Entity entityToAdd){
         if (!isMember(entityToAdd))
             this.memberEntities.add(entityToAdd);
+
+        markDirty();
     }
 
     @Override
     public void removeMemberClass(Class<? extends Entity> classToRemove) {
         if (isMember(classToRemove))
             this.memberClasses.remove(classToRemove);
+
+        markDirty();
     }
 
     @Override
     public void removeMemberEntity(Entity entityToRemove) {
         if (isMember(entityToRemove))
             this.memberEntities.remove(entityToRemove);
+
+        markDirty();
     }
 
     @Override
     public void addEnemyClass(Class<? extends Entity> classToAdd) {
         if (!isEnemy(classToAdd))
             this.enemyClasses.add(classToAdd);
+
+        markDirty();
     }
 
     @Override
     public void addEnemyEntity(Entity entityToAdd) {
         if (!isEnemy(entityToAdd))
             this.enemyEntities.add(entityToAdd);
+
+        markDirty();
     }
 
     @Override
     public void removeEnemyClass(Class<? extends Entity> classToRemove) {
         if (isEnemy(classToRemove))
             this.enemyClasses.remove(classToRemove);
+
+        markDirty();
     }
 
     @Override
     public void removeEnemyEntity(Entity entityToRemove) {
         if (isEnemy(entityToRemove))
             this.enemyEntities.remove(entityToRemove);
+
+        markDirty();
     }
 
     @Override
@@ -128,18 +168,24 @@ public class Faction implements IFaction {
     public void clearMembers(){
         this.memberClasses.clear();
         this.memberEntities.clear();
+
+        markDirty();
     }
 
     @Override
     public void clearFriends() {
         this.friendClasses.clear();
         this.friendEntities.clear();
+
+        markDirty();
     }
 
     @Override
     public void clearEnemies() {
         this.enemyClasses.clear();
         this.enemyEntities.clear();
+
+        markDirty();
     }
 
     @Override
@@ -206,5 +252,22 @@ public class Faction implements IFaction {
         }
 
         return false;
+    }
+
+    @Override
+    public void read(CompoundNBT nbt) {
+
+    }
+
+    @Override
+    public CompoundNBT write(CompoundNBT compound) {
+        if (!getIsPermanent())
+            return compound;
+
+        compound.putString("Name", getName());
+        for (int i = 0; i < this.memberClasses.size(); i++) {
+            compound.putString("MemberClass" + i, this.memberClasses.toArray()[i].toString());
+        }
+        return compound;
     }
 }
