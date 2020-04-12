@@ -256,7 +256,33 @@ public class Faction extends WorldSavedData implements IFaction {
 
     @Override
     public void read(CompoundNBT nbt) {
-
+        int i = 0;
+        while (nbt.contains("MemberClass" + i)) {
+            try {
+                addMemberClass((Class<? extends Entity>) Class.forName(nbt.getString("MemberClass" + i)));
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            i++;
+        }
+        i = 0;
+        while (nbt.contains("FriendClass" + i)) {
+            try {
+                addFriendClass((Class<? extends Entity>) Class.forName(nbt.getString("FriendClass" + i)));
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            i++;
+        }
+        i = 0;
+        while (nbt.contains("EnemyClass" + i)) {
+            try {
+                addEnemyClass((Class<? extends Entity>) Class.forName(nbt.getString("EnemyClass" + i)));
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            i++;
+        }
     }
 
     @Override
@@ -266,7 +292,27 @@ public class Faction extends WorldSavedData implements IFaction {
 
         compound.putString("Name", getName());
         for (int i = 0; i < this.memberClasses.size(); i++) {
-            compound.putString("MemberClass" + i, this.memberClasses.toArray()[i].toString());
+            compound.putString("MemberClass" + i, this.memberClasses.toArray()[i].toString().replaceAll("(.*)\\s", ""));
+        }
+
+        for (int i = 0; i < this.memberEntities.size(); i++) {
+            compound.putString("MemberEntities" + i, this.memberEntities.toArray()[i].toString());
+        }
+
+        for (int i = 0; i < this.friendClasses.size(); i++) {
+            compound.putString("FriendClass" + i, this.friendClasses.toArray()[i].toString().replaceAll("(.*)\\s", ""));
+        }
+
+        for (int i = 0; i < this.friendEntities.size(); i++) {
+            compound.putString("FriendEntities" + i, this.friendEntities.toArray()[i].toString());
+        }
+
+        for (int i = 0; i < this.enemyClasses.size(); i++) {
+            compound.putString("EnemyClass" + i, this.enemyClasses.toArray()[i].toString().replaceAll("(.*)\\s", ""));
+        }
+
+        for (int i = 0; i < this.enemyEntities.size(); i++) {
+            compound.putString("EnemyEntities" + i, this.enemyEntities.toArray()[i].toString());
         }
         return compound;
     }
