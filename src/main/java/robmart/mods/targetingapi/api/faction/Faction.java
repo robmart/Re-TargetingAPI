@@ -2,6 +2,7 @@ package robmart.mods.targetingapi.api.faction;
 
 import com.google.common.collect.Sets;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.WorldSavedData;
@@ -298,7 +299,13 @@ public class Faction extends WorldSavedData implements IFaction {
         }
 
         for (int i = 0; i < this.memberEntities.size(); i++) {
-            compound.putString("MemberEntities" + i, this.memberEntities.toArray()[i].toString());
+            CompoundNBT entityNBT = new CompoundNBT();
+            Entity entity = (Entity) this.memberEntities.toArray()[i];
+            entityNBT.putString("EntityType", entity.getClass().getName());
+            if (entity instanceof PlayerEntity) {
+                entityNBT.putUniqueId("UUID", entity.getUniqueID());
+            }
+            compound.put("MemberEntities" + i, entityNBT);
         }
 
         for (int i = 0; i < this.friendClasses.size(); i++) {
@@ -306,7 +313,13 @@ public class Faction extends WorldSavedData implements IFaction {
         }
 
         for (int i = 0; i < this.friendEntities.size(); i++) {
-            compound.putString("FriendEntities" + i, this.friendEntities.toArray()[i].toString());
+            CompoundNBT entityNBT = new CompoundNBT();
+            Entity entity = (Entity) this.friendEntities.toArray()[i];
+            entityNBT.putString("EntityType", entity.getClass().getName());
+            if (entity instanceof PlayerEntity) {
+                entityNBT.putUniqueId("UUID", entity.getUniqueID());
+            }
+            compound.put("FriendEntities" + i, entityNBT);
         }
 
         for (int i = 0; i < this.enemyClasses.size(); i++) {
@@ -314,7 +327,13 @@ public class Faction extends WorldSavedData implements IFaction {
         }
 
         for (int i = 0; i < this.enemyEntities.size(); i++) {
-            compound.putString("EnemyEntities" + i, this.enemyEntities.toArray()[i].toString());
+            CompoundNBT entityNBT = new CompoundNBT();
+            Entity entity = (Entity) this.enemyEntities.toArray()[i];
+            entityNBT.putString("EntityType", entity.getClass().getName());
+            if (entity instanceof PlayerEntity) {
+                entityNBT.putUniqueId("UUID", entity.getUniqueID());
+            }
+            compound.put("EnemyEntities" + i, entityNBT);
         }
         return compound;
     }
