@@ -256,6 +256,8 @@ public class Faction extends WorldSavedData implements IFaction {
 
     @Override
     public void read(CompoundNBT nbt) {
+        nbt = nbt.getCompound("data");
+
         int i = 0;
         while (nbt.contains("MemberClass" + i)) {
             try {
