@@ -51,9 +51,6 @@ public class StorageEventHandler {
         } else {
             factionDir.mkdir();
         }
-
-        Map<?, ?> map = Targeting.getFactionMap();
-        System.out.println(map);
     }
 
     @SubscribeEvent
