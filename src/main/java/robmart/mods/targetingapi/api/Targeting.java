@@ -29,6 +29,17 @@ public class Targeting {
     }
 
     /**
+     * Disband (remove) a faction
+     * @param faction The faction that should be removed
+     */
+    public static void disbandFaction(IFaction faction){
+        for (String name : factionMap.keySet()) {
+            if (name.equals(faction.getName()))
+                factionMap.remove(faction.getName());
+        }
+    }
+
+    /**
      * Gets faction from name
      * @param factionName The name of the requested faction
      * @return The requested faction
