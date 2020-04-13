@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.server.management.PlayerList;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.WorldSavedData;
 import robmart.mods.targetingapi.api.reference.Reference;
@@ -15,6 +16,7 @@ import java.util.Set;
  * Remade by Robmart on 1/30/2020
  */
 public class Faction extends WorldSavedData implements IFaction {
+    private final World world;
     private final String name;
     private final boolean isPermanent;
 
@@ -25,12 +27,15 @@ public class Faction extends WorldSavedData implements IFaction {
     private final Set<Entity> friendEntities = Sets.newHashSet();
     private final Set<Entity> enemyEntities = Sets.newHashSet();
 
-    public Faction(String name) {
-        this(name, false);
+    private final CompoundNBT unprocessedData = new CompoundNBT();
+
+    public Faction(World world, String name) {
+        this(world, name, false);
     }
 
-    public Faction(String name, boolean permanent) {
+    public Faction(World world, String name, boolean permanent) {
         super(Reference.MOD_ID +  "_Faction_" + name);
+        this.world = world;
         this.name = name;
         this.isPermanent = permanent;
     }
@@ -255,7 +260,6 @@ public class Faction extends WorldSavedData implements IFaction {
         return false;
     }
 
-    @Override
     public void read(CompoundNBT nbt) {
         nbt = nbt.getCompound("data");
 
@@ -263,6 +267,25 @@ public class Faction extends WorldSavedData implements IFaction {
         while (nbt.contains("MemberClass" + i)) {
             try {
                 addMemberClass((Class<? extends Entity>) Class.forName(nbt.getString("MemberClass" + i)));
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            i++;
+        }
+        i = 0;
+        int unprocessedCounter = 0;
+        while (nbt.contains("MemberEntity" + i)) {
+            CompoundNBT entityNBT = (CompoundNBT) nbt.get("MemberEntity0");
+            try {
+                Class<?> entityClass = Class.forName(entityNBT.getString("EntityType"));
+                if (PlayerEntity.class.isAssignableFrom(entityClass)) {
+                    PlayerEntity player = this.world.getServer().getPlayerList().getPlayerByUUID(entityNBT.getUniqueId("UUID"));
+                    if (player != null) {
+                        addMemberEntity(player);
+                    } else {
+                        this.unprocessedData.put("UnprocessedMemberPlayer" + unprocessedCounter++, entityNBT);
+                    }
+                }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -286,6 +309,8 @@ public class Faction extends WorldSavedData implements IFaction {
             }
             i++;
         }
+
+        System.out.println();
     }
 
     @Override
@@ -305,7 +330,7 @@ public class Faction extends WorldSavedData implements IFaction {
             if (entity instanceof PlayerEntity) {
                 entityNBT.putUniqueId("UUID", entity.getUniqueID());
             }
-            compound.put("MemberEntities" + i, entityNBT);
+            compound.put("MemberEntity" + i, entityNBT);
         }
 
         for (int i = 0; i < this.friendClasses.size(); i++) {
@@ -319,7 +344,7 @@ public class Faction extends WorldSavedData implements IFaction {
             if (entity instanceof PlayerEntity) {
                 entityNBT.putUniqueId("UUID", entity.getUniqueID());
             }
-            compound.put("FriendEntities" + i, entityNBT);
+            compound.put("FriendEntity" + i, entityNBT);
         }
 
         for (int i = 0; i < this.enemyClasses.size(); i++) {
@@ -333,7 +358,7 @@ public class Faction extends WorldSavedData implements IFaction {
             if (entity instanceof PlayerEntity) {
                 entityNBT.putUniqueId("UUID", entity.getUniqueID());
             }
-            compound.put("EnemyEntities" + i, entityNBT);
+            compound.put("EnemyEntity" + i, entityNBT);
         }
         return compound;
     }

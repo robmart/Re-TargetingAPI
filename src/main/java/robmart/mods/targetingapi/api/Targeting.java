@@ -7,6 +7,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.scoreboard.Team;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
 import robmart.mods.targetingapi.api.faction.IFaction;
 
 import java.util.ArrayList;
@@ -14,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Mod.EventBusSubscriber
 public class Targeting {
 
     private static HashMap<String, IFaction> factionMap = Maps.newHashMap();
@@ -240,6 +244,11 @@ public class Targeting {
         }
 
         return false;
+    }
+
+    @SubscribeEvent
+    public static void onServerStopping(final FMLServerStoppingEvent event) {
+        factionMap.clear();
     }
 
 }

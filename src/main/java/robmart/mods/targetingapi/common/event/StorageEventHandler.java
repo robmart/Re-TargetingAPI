@@ -3,6 +3,8 @@ package robmart.mods.targetingapi.common.event;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.CompressedStreamTools;
+import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -12,6 +14,7 @@ import robmart.mods.targetingapi.api.Targeting;
 import robmart.mods.targetingapi.api.faction.Faction;
 import robmart.mods.targetingapi.api.faction.IFaction;
 import robmart.mods.targetingapi.common.TargetingAPI;
+import robmart.mods.targetingapi.common.helper.NBTHelper;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,25 +25,17 @@ public class StorageEventHandler {
 
     //TODO: Probably not the intended way to do this. Find a better way.
 
-    @SubscribeEvent
-    public static void onServerStarting(final FMLServerStartingEvent event){
+    private static void loadFactions(final FMLServerStartingEvent event) {
         File saveDir = new File(event.getServer().getDataDirectory().getAbsolutePath() +  "\\saves\\" +
                 event.getServer().getFolderName());
         File factionDir = new File(saveDir.getAbsolutePath() + "\\factions");
         if (factionDir.exists()) {
             for (String fileName : factionDir.list()) {
                 File file = new File(factionDir + "\\" + fileName);
-                CompoundNBT nbt = null;
                 if (file.isFile() && file.exists() && fileName.contains(".dat")) {
-                    try {
-                        FileInputStream fileinputstream = new FileInputStream(file);
-                        nbt = CompressedStreamTools.readCompressed(fileinputstream);
-                    } catch (IOException ioexception) {
-                        TargetingAPI.logger.error("Could not load data", ioexception);
-                    }
-
+                    CompoundNBT nbt = NBTHelper.getNBTFromFile(file);
                     if (nbt != null) {
-                        IFaction faction = new Faction(nbt.getCompound("data").getString("Name"), true);
+                        IFaction faction = new Faction(event.getServer().getWorld(DimensionType.OVERWORLD), nbt.getCompound("data").getString("Name"), true);
                         ((WorldSavedData) faction).read(nbt);
                         Targeting.registerFaction(faction);
                     }
@@ -49,6 +44,11 @@ public class StorageEventHandler {
         } else {
             factionDir.mkdir();
         }
+    }
+
+    @SubscribeEvent
+    public static void onServerStarting(final FMLServerStartingEvent event){
+        loadFactions(event);
     }
 
     @SubscribeEvent
