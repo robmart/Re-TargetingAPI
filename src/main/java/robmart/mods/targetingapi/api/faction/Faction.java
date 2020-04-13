@@ -309,6 +309,8 @@ public class Faction extends WorldSavedData implements IFaction {
             }
             i++;
         }
+
+        System.out.println();
     }
 
     @Override
@@ -334,6 +336,7 @@ public class Faction extends WorldSavedData implements IFaction {
 
         for (int i = 0; this.unprocessedData.contains("UnprocessedMemberPlayer" + i); i++) {
             compound.put("MemberEntity" + imember++, this.unprocessedData.get("UnprocessedMemberPlayer" + i));
+            this.unprocessedData.remove("UnprocessedMemberPlayer" + i);
         }
 
         for (int i = 0; i < this.friendClasses.size(); i++) {
