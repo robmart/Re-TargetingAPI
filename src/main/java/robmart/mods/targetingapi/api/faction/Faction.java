@@ -301,6 +301,25 @@ public class Faction extends WorldSavedData implements IFaction {
             i++;
         }
         i = 0;
+        unprocessedCounter = 0;
+        while (nbt.contains("FriendEntity" + i)) {
+            CompoundNBT entityNBT = (CompoundNBT) nbt.get("FriendEntity0");
+            try {
+                Class<?> entityClass = Class.forName(entityNBT.getString("EntityType"));
+                if (PlayerEntity.class.isAssignableFrom(entityClass)) {
+                    PlayerEntity player = this.world.getServer().getPlayerList().getPlayerByUUID(entityNBT.getUniqueId("UUID"));
+                    if (player != null) {
+                        addFriendEntity(player);
+                    } else {
+                        this.unprocessedData.put("UnprocessedFriendPlayer" + unprocessedCounter++, entityNBT);
+                    }
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            i++;
+        }
+        i = 0;
         while (nbt.contains("EnemyClass" + i)) {
             try {
                 addEnemyClass((Class<? extends Entity>) Class.forName(nbt.getString("EnemyClass" + i)));
@@ -309,8 +328,25 @@ public class Faction extends WorldSavedData implements IFaction {
             }
             i++;
         }
-
-        System.out.println();
+        i = 0;
+        unprocessedCounter = 0;
+        while (nbt.contains("EnemyEntity" + i)) {
+            CompoundNBT entityNBT = (CompoundNBT) nbt.get("EnemyEntity0");
+            try {
+                Class<?> entityClass = Class.forName(entityNBT.getString("EntityType"));
+                if (PlayerEntity.class.isAssignableFrom(entityClass)) {
+                    PlayerEntity player = this.world.getServer().getPlayerList().getPlayerByUUID(entityNBT.getUniqueId("UUID"));
+                    if (player != null) {
+                        addEnemyEntity(player);
+                    } else {
+                        this.unprocessedData.put("UnprocessedEnemyPlayer" + unprocessedCounter++, entityNBT);
+                    }
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            i++;
+        }
     }
 
     @Override
@@ -323,7 +359,7 @@ public class Faction extends WorldSavedData implements IFaction {
             compound.putString("MemberClass" + i, this.memberClasses.toArray()[i].toString().replaceAll("(.*)\\s", ""));
         }
 
-        int imember = 0;
+        int imember;
         for (imember = 0; imember < this.memberEntities.size(); imember++) {
             CompoundNBT entityNBT = new CompoundNBT();
             Entity entity = (Entity) this.memberEntities.toArray()[imember];
@@ -343,28 +379,38 @@ public class Faction extends WorldSavedData implements IFaction {
             compound.putString("FriendClass" + i, this.friendClasses.toArray()[i].toString().replaceAll("(.*)\\s", ""));
         }
 
-        for (int i = 0; i < this.friendEntities.size(); i++) {
+        for (imember = 0; imember < this.friendEntities.size(); imember++) {
             CompoundNBT entityNBT = new CompoundNBT();
-            Entity entity = (Entity) this.friendEntities.toArray()[i];
+            Entity entity = (Entity) this.friendEntities.toArray()[imember];
             entityNBT.putString("EntityType", entity.getClass().getName());
             if (entity instanceof PlayerEntity) {
                 entityNBT.putUniqueId("UUID", entity.getUniqueID());
             }
-            compound.put("FriendEntity" + i, entityNBT);
+            compound.put("FriendEntity" + imember, entityNBT);
+        }
+
+        for (int i = 0; this.unprocessedData.contains("UnprocessedFriendPlayer" + i); i++) {
+            compound.put("FriendEntity" + imember++, this.unprocessedData.get("UnprocessedFriendPlayer" + i));
+            this.unprocessedData.remove("UnprocessedFriendPlayer" + i);
         }
 
         for (int i = 0; i < this.enemyClasses.size(); i++) {
             compound.putString("EnemyClass" + i, this.enemyClasses.toArray()[i].toString().replaceAll("(.*)\\s", ""));
         }
 
-        for (int i = 0; i < this.enemyEntities.size(); i++) {
+        for (imember = 0; imember < this.enemyEntities.size(); imember++) {
             CompoundNBT entityNBT = new CompoundNBT();
-            Entity entity = (Entity) this.enemyEntities.toArray()[i];
+            Entity entity = (Entity) this.enemyEntities.toArray()[imember];
             entityNBT.putString("EntityType", entity.getClass().getName());
             if (entity instanceof PlayerEntity) {
                 entityNBT.putUniqueId("UUID", entity.getUniqueID());
             }
-            compound.put("EnemyEntity" + i, entityNBT);
+            compound.put("EnemyEntity" + imember, entityNBT);
+        }
+
+        for (int i = 0; this.unprocessedData.contains("UnprocessedEnemyPlayer" + i); i++) {
+            compound.put("EnemyEntity" + imember++, this.unprocessedData.get("UnprocessedEnemyPlayer" + i));
+            this.unprocessedData.remove("UnprocessedEnemyPlayer" + i);
         }
         return compound;
     }
