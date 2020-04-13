@@ -309,8 +309,6 @@ public class Faction extends WorldSavedData implements IFaction {
             }
             i++;
         }
-
-        System.out.println();
     }
 
     @Override
@@ -323,14 +321,19 @@ public class Faction extends WorldSavedData implements IFaction {
             compound.putString("MemberClass" + i, this.memberClasses.toArray()[i].toString().replaceAll("(.*)\\s", ""));
         }
 
-        for (int i = 0; i < this.memberEntities.size(); i++) {
+        int imember = 0;
+        for (imember = 0; imember < this.memberEntities.size(); imember++) {
             CompoundNBT entityNBT = new CompoundNBT();
-            Entity entity = (Entity) this.memberEntities.toArray()[i];
+            Entity entity = (Entity) this.memberEntities.toArray()[imember];
             entityNBT.putString("EntityType", entity.getClass().getName());
             if (entity instanceof PlayerEntity) {
                 entityNBT.putUniqueId("UUID", entity.getUniqueID());
             }
-            compound.put("MemberEntity" + i, entityNBT);
+            compound.put("MemberEntity" + imember, entityNBT);
+        }
+
+        for (int i = 0; this.unprocessedData.contains("UnprocessedMemberPlayer" + i); i++) {
+            compound.put("MemberEntity" + imember++, this.unprocessedData.get("UnprocessedMemberPlayer" + i));
         }
 
         for (int i = 0; i < this.friendClasses.size(); i++) {
