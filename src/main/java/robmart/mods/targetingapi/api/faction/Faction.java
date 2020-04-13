@@ -260,12 +260,16 @@ public class Faction extends WorldSavedData implements IFaction {
         return false;
     }
 
+    //Turn back before it's too late
+    //Trust me don't go further
+
     public void read(CompoundNBT nbt) {
         nbt = nbt.getCompound("data");
 
         int i = 0;
-        while (nbt.contains("MemberClass" + i)) {
+        while (nbt.contains("MemberClass" + i)) { //For each saved class
             try {
+                //Gets the class from string and adds it to the faction
                 addMemberClass((Class<? extends Entity>) Class.forName(nbt.getString("MemberClass" + i)));
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -274,26 +278,26 @@ public class Faction extends WorldSavedData implements IFaction {
         }
         i = 0;
         int unprocessedCounter = 0;
-        while (nbt.contains("MemberEntity" + i)) {
-            CompoundNBT entityNBT = (CompoundNBT) nbt.get("MemberEntity0");
+        while (nbt.contains("MemberEntity" + i)) { //For each saved entity
+            CompoundNBT entityNBT = (CompoundNBT) nbt.get("MemberEntity" + i++);
             try {
                 Class<?> entityClass = Class.forName(entityNBT.getString("EntityType"));
-                if (PlayerEntity.class.isAssignableFrom(entityClass)) {
+                if (PlayerEntity.class.isAssignableFrom(entityClass)) { //Checks if entity is player
                     PlayerEntity player = this.world.getServer().getPlayerList().getPlayerByUUID(entityNBT.getUniqueId("UUID"));
-                    if (player != null) {
+                    if (player != null) { //If player has loaded, joined the server
                         addMemberEntity(player);
-                    } else {
+                    } else { //If the player hasn't joined the server
                         this.unprocessedData.put("UnprocessedMemberPlayer" + unprocessedCounter++, entityNBT);
                     }
                 }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            i++;
         }
         i = 0;
-        while (nbt.contains("FriendClass" + i)) {
+        while (nbt.contains("FriendClass" + i)) {//For each saved class
             try {
+                //Gets the class from string and adds it to the faction
                 addFriendClass((Class<? extends Entity>) Class.forName(nbt.getString("FriendClass" + i)));
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -302,26 +306,26 @@ public class Faction extends WorldSavedData implements IFaction {
         }
         i = 0;
         unprocessedCounter = 0;
-        while (nbt.contains("FriendEntity" + i)) {
-            CompoundNBT entityNBT = (CompoundNBT) nbt.get("FriendEntity0");
+        while (nbt.contains("FriendEntity" + i)) {//For each saved entity
+            CompoundNBT entityNBT = (CompoundNBT) nbt.get("FriendEntity" + i++);
             try {
                 Class<?> entityClass = Class.forName(entityNBT.getString("EntityType"));
-                if (PlayerEntity.class.isAssignableFrom(entityClass)) {
+                if (PlayerEntity.class.isAssignableFrom(entityClass)) {//Checks if entity is player
                     PlayerEntity player = this.world.getServer().getPlayerList().getPlayerByUUID(entityNBT.getUniqueId("UUID"));
-                    if (player != null) {
+                    if (player != null) {//If player has loaded, joined the server
                         addFriendEntity(player);
-                    } else {
+                    } else {//If the player hasn't joined the server
                         this.unprocessedData.put("UnprocessedFriendPlayer" + unprocessedCounter++, entityNBT);
                     }
                 }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            i++;
         }
         i = 0;
-        while (nbt.contains("EnemyClass" + i)) {
+        while (nbt.contains("EnemyClass" + i)) {//For each saved class
             try {
+                //Gets the class from string and adds it to the faction
                 addEnemyClass((Class<? extends Entity>) Class.forName(nbt.getString("EnemyClass" + i)));
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -330,22 +334,21 @@ public class Faction extends WorldSavedData implements IFaction {
         }
         i = 0;
         unprocessedCounter = 0;
-        while (nbt.contains("EnemyEntity" + i)) {
-            CompoundNBT entityNBT = (CompoundNBT) nbt.get("EnemyEntity0");
+        while (nbt.contains("EnemyEntity" + i)) {//For each saved entity
+            CompoundNBT entityNBT = (CompoundNBT) nbt.get("EnemyEntity" + i++);
             try {
                 Class<?> entityClass = Class.forName(entityNBT.getString("EntityType"));
-                if (PlayerEntity.class.isAssignableFrom(entityClass)) {
+                if (PlayerEntity.class.isAssignableFrom(entityClass)) {//Checks if entity is player
                     PlayerEntity player = this.world.getServer().getPlayerList().getPlayerByUUID(entityNBT.getUniqueId("UUID"));
-                    if (player != null) {
+                    if (player != null) {//If player has loaded, joined the server
                         addEnemyEntity(player);
-                    } else {
+                    } else {//If the player hasn't joined the server
                         this.unprocessedData.put("UnprocessedEnemyPlayer" + unprocessedCounter++, entityNBT);
                     }
                 }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            i++;
         }
     }
 
@@ -366,6 +369,8 @@ public class Faction extends WorldSavedData implements IFaction {
             entityNBT.putString("EntityType", entity.getClass().getName());
             if (entity instanceof PlayerEntity) {
                 entityNBT.putUniqueId("UUID", entity.getUniqueID());
+            } else {
+                //entityNBT.putString(); TODO: saving/loading non-player entities
             }
             compound.put("MemberEntity" + imember, entityNBT);
         }
