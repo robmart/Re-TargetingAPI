@@ -6,6 +6,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.storage.WorldSavedData;
 import robmart.mods.targetingapi.api.reference.Reference;
 
@@ -289,6 +290,9 @@ public class Faction extends WorldSavedData implements IFaction {
                     } else { //If the player hasn't joined the server
                         this.unprocessedData.put("UnprocessedMemberPlayer" + unprocessedCounter++, entityNBT);
                     }
+                } else if (Entity.class.isAssignableFrom(entityClass)) { //Checks if it actually is an entity
+//                    Entity entity = this.world.getServer().getWorld(DimensionType.getById(entityNBT.getInt("Dimension")))
+//                            .getClosestEntity();
                 }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -367,14 +371,10 @@ public class Faction extends WorldSavedData implements IFaction {
             CompoundNBT entityNBT = new CompoundNBT();
             Entity entity = (Entity) this.memberEntities.toArray()[imember];
             entityNBT.putString("EntityType", entity.getClass().getName());
-            if (entity instanceof PlayerEntity) {
-                entityNBT.putUniqueId("UUID", entity.getUniqueID());
-            }else {
+            if (!(entity instanceof PlayerEntity)) {
                 entityNBT.putInt("Dimension", entity.dimension.getId());
-                entityNBT.putDouble("PosX", entity.getPosX());
-                entityNBT.putDouble("PosY", entity.getPosY());
-                entityNBT.putDouble("PosZ", entity.getPosZ());
             }
+            entityNBT.putUniqueId("UUID", entity.getUniqueID());
             compound.put("MemberEntity" + imember, entityNBT);
         }
 
@@ -391,15 +391,11 @@ public class Faction extends WorldSavedData implements IFaction {
             CompoundNBT entityNBT = new CompoundNBT();
             Entity entity = (Entity) this.friendEntities.toArray()[imember];
             entityNBT.putString("EntityType", entity.getClass().getName());
-            if (entity instanceof PlayerEntity) {
-                entityNBT.putUniqueId("UUID", entity.getUniqueID());
-            }else {
+            if (!(entity instanceof PlayerEntity)) {
                 entityNBT.putInt("Dimension", entity.dimension.getId());
-                entityNBT.putDouble("PosX", entity.getPosX());
-                entityNBT.putDouble("PosY", entity.getPosY());
-                entityNBT.putDouble("PosZ", entity.getPosZ());
             }
-            compound.put("MemberEntity" + imember, entityNBT);
+            entityNBT.putUniqueId("UUID", entity.getUniqueID());
+            compound.put("FriendEntity" + imember, entityNBT);
         }
 
         for (int i = 0; this.unprocessedData.contains("UnprocessedFriendPlayer" + i); i++) {
@@ -415,15 +411,11 @@ public class Faction extends WorldSavedData implements IFaction {
             CompoundNBT entityNBT = new CompoundNBT();
             Entity entity = (Entity) this.enemyEntities.toArray()[imember];
             entityNBT.putString("EntityType", entity.getClass().getName());
-            if (entity instanceof PlayerEntity) {
-                entityNBT.putUniqueId("UUID", entity.getUniqueID());
-            }else {
+            if (!(entity instanceof PlayerEntity)) {
                 entityNBT.putInt("Dimension", entity.dimension.getId());
-                entityNBT.putDouble("PosX", entity.getPosX());
-                entityNBT.putDouble("PosY", entity.getPosY());
-                entityNBT.putDouble("PosZ", entity.getPosZ());
             }
-            compound.put("MemberEntity" + imember, entityNBT);
+            entityNBT.putUniqueId("UUID", entity.getUniqueID());
+            compound.put("EnemyEntity" + imember, entityNBT);
         }
 
         for (int i = 0; this.unprocessedData.contains("UnprocessedEnemyPlayer" + i); i++) {

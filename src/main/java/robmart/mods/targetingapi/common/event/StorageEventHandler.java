@@ -1,14 +1,10 @@
 package robmart.mods.targetingapi.common.event;
 
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.storage.WorldSavedData;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -18,12 +14,9 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import robmart.mods.targetingapi.api.Targeting;
 import robmart.mods.targetingapi.api.faction.Faction;
 import robmart.mods.targetingapi.api.faction.IFaction;
-import robmart.mods.targetingapi.common.TargetingAPI;
 import robmart.mods.targetingapi.common.helper.NBTHelper;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 
 @Mod.EventBusSubscriber
 public class StorageEventHandler {
