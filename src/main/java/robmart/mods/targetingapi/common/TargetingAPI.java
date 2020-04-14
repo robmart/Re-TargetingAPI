@@ -1,39 +1,43 @@
 package robmart.mods.targetingapi.common;
 
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import robmart.mods.targetingapi.client.ClientProxy;
+import robmart.mods.targetingapi.common.config.ConfigHandler;
 
 import static robmart.mods.targetingapi.api.reference.Reference.*;
 
-@Mod(modid = MOD_ID, name = MOD_NAME, version = MOD_VERSION)
+@Mod(MOD_ID)
 public class TargetingAPI {
 
-    @Mod.Instance
-    public static TargetingAPI instance = new TargetingAPI();
+    public static TargetingAPI instance;
 
-    @SidedProxy(clientSide = COMMON_PROXY, serverSide = CLIENT_PROXY)
+    public TargetingAPI() {
+        instance = this;
+        proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigHandler.CLIENT_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigHandler.COMMON_SPEC);
+        MinecraftForge.EVENT_BUS.addListener(this::serverStarting);
+    }
+
     public static CommonProxy proxy;
 
     public static final Logger logger = LogManager.getLogger(MOD_ID.toUpperCase());
 
-    @EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
-        proxy.preInit(event);
+    public void commonSetup(final FMLCommonSetupEvent event) {
+        proxy.commonSetup(event);
     }
 
-    @EventHandler
-    public void init(FMLInitializationEvent event) {
-        proxy.init(event);
-    }
-
-    @EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
-        proxy.postInit(event);
+    public void serverStarting(FMLServerStartingEvent event) {
+        proxy.serverStarting(event);
     }
 }
