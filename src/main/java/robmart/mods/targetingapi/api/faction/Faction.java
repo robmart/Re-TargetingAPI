@@ -4,7 +4,6 @@ import com.google.common.collect.Sets;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.server.management.PlayerList;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.storage.WorldSavedData;
@@ -291,8 +290,11 @@ public class Faction extends WorldSavedData implements IFaction {
                         this.unprocessedData.put("UnprocessedMemberPlayer" + unprocessedCounter++, entityNBT);
                     }
                 } else if (Entity.class.isAssignableFrom(entityClass)) { //Checks if it actually is an entity
-//                    Entity entity = this.world.getServer().getWorld(DimensionType.getById(entityNBT.getInt("Dimension")))
-//                            .getClosestEntity();
+                      Entity entity = this.world.getServer().getWorld(DimensionType.getById(entityNBT.getInt("Dimension")))
+                              .getEntityByUuid(entityNBT.getUniqueId("UUID"));
+                      if (entity != null) {
+                          addMemberEntity(entity);
+                      }
                 }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -321,6 +323,12 @@ public class Faction extends WorldSavedData implements IFaction {
                     } else {//If the player hasn't joined the server
                         this.unprocessedData.put("UnprocessedFriendPlayer" + unprocessedCounter++, entityNBT);
                     }
+                } else if (Entity.class.isAssignableFrom(entityClass)) { //Checks if it actually is an entity
+                    Entity entity = this.world.getServer().getWorld(DimensionType.getById(entityNBT.getInt("Dimension")))
+                            .getEntityByUuid(entityNBT.getUniqueId("UUID"));
+                    if (entity != null) {
+                        addFriendEntity(entity);
+                    }
                 }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -348,6 +356,12 @@ public class Faction extends WorldSavedData implements IFaction {
                         addEnemyEntity(player);
                     } else {//If the player hasn't joined the server
                         this.unprocessedData.put("UnprocessedEnemyPlayer" + unprocessedCounter++, entityNBT);
+                    }
+                } else if (Entity.class.isAssignableFrom(entityClass)) { //Checks if it actually is an entity
+                    Entity entity = this.world.getServer().getWorld(DimensionType.getById(entityNBT.getInt("Dimension")))
+                            .getEntityByUuid(entityNBT.getUniqueId("UUID"));
+                    if (entity != null) {
+                        addEnemyEntity(entity);
                     }
                 }
             } catch (ClassNotFoundException e) {

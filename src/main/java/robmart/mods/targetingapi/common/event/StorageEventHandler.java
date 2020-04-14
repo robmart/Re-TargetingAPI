@@ -21,15 +21,7 @@ import java.io.File;
 @Mod.EventBusSubscriber
 public class StorageEventHandler {
 
-//    @SubscribeEvent
-//    public static void debugDamage(final LivingHurtEvent event) {
-//        IFaction faction = Targeting.getFaction("FarmAnimals1");
-//        Entity entity = event.getEntity();
-//        faction.addMemberEntity(entity);
-//    }
-
     //TODO: Probably not the intended way to do this. Find a better way.
-
     private static void loadFactions(final Event event) {
         MinecraftServer server = event instanceof FMLServerStartingEvent ? ((FMLServerStartingEvent) event).getServer() : ((PlayerEvent.PlayerLoggedInEvent) event).getEntity().getServer();
         File saveDir = new File(server.getDataDirectory().getAbsolutePath() +  "\\saves\\" +
