@@ -1,6 +1,9 @@
 package robmart.mods.targetingapi.api.faction;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.server.management.PlayerList;
+import net.minecraft.world.storage.WorldSavedData;
 
 import java.util.Set;
 
@@ -26,6 +29,7 @@ import java.util.Set;
 public interface IFaction {
 
     String getName();
+    boolean getIsPermanent();
     void addFriendClass(Class<? extends Entity> classToAdd);
     void addFriendEntity(Entity entityToAdd);
     void removeFriendClass(Class<? extends Entity> classToRemove);
