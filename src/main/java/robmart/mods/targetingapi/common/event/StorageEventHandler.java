@@ -1,12 +1,14 @@
 package robmart.mods.targetingapi.common.event;
 
 import com.google.common.collect.ImmutableMap;
+import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.storage.WorldSavedData;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -25,6 +27,13 @@ import java.io.IOException;
 
 @Mod.EventBusSubscriber
 public class StorageEventHandler {
+
+//    @SubscribeEvent
+//    public static void debugDamage(final LivingHurtEvent event) {
+//        IFaction faction = Targeting.getFaction("FarmAnimals1");
+//        Entity entity = event.getEntity();
+//        faction.addMemberEntity(entity);
+//    }
 
     //TODO: Probably not the intended way to do this. Find a better way.
 

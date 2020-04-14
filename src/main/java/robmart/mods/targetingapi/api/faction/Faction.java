@@ -369,15 +369,18 @@ public class Faction extends WorldSavedData implements IFaction {
             entityNBT.putString("EntityType", entity.getClass().getName());
             if (entity instanceof PlayerEntity) {
                 entityNBT.putUniqueId("UUID", entity.getUniqueID());
-            } else {
-                //entityNBT.putString(); TODO: saving/loading non-player entities
+            }else {
+                entityNBT.putInt("Dimension", entity.dimension.getId());
+                entityNBT.putDouble("PosX", entity.getPosX());
+                entityNBT.putDouble("PosY", entity.getPosY());
+                entityNBT.putDouble("PosZ", entity.getPosZ());
             }
             compound.put("MemberEntity" + imember, entityNBT);
         }
 
         for (int i = 0; this.unprocessedData.contains("UnprocessedMemberPlayer" + i); i++) {
             compound.put("MemberEntity" + imember++, this.unprocessedData.get("UnprocessedMemberPlayer" + i));
-            this.unprocessedData.remove("UnprocessedMemberPlayer" + i);
+            this.unprocessedData.remove("UnprocessedMemberPlayer" + imember);
         }
 
         for (int i = 0; i < this.friendClasses.size(); i++) {
@@ -390,8 +393,13 @@ public class Faction extends WorldSavedData implements IFaction {
             entityNBT.putString("EntityType", entity.getClass().getName());
             if (entity instanceof PlayerEntity) {
                 entityNBT.putUniqueId("UUID", entity.getUniqueID());
+            }else {
+                entityNBT.putInt("Dimension", entity.dimension.getId());
+                entityNBT.putDouble("PosX", entity.getPosX());
+                entityNBT.putDouble("PosY", entity.getPosY());
+                entityNBT.putDouble("PosZ", entity.getPosZ());
             }
-            compound.put("FriendEntity" + imember, entityNBT);
+            compound.put("MemberEntity" + imember, entityNBT);
         }
 
         for (int i = 0; this.unprocessedData.contains("UnprocessedFriendPlayer" + i); i++) {
@@ -409,8 +417,13 @@ public class Faction extends WorldSavedData implements IFaction {
             entityNBT.putString("EntityType", entity.getClass().getName());
             if (entity instanceof PlayerEntity) {
                 entityNBT.putUniqueId("UUID", entity.getUniqueID());
+            }else {
+                entityNBT.putInt("Dimension", entity.dimension.getId());
+                entityNBT.putDouble("PosX", entity.getPosX());
+                entityNBT.putDouble("PosY", entity.getPosY());
+                entityNBT.putDouble("PosZ", entity.getPosZ());
             }
-            compound.put("EnemyEntity" + imember, entityNBT);
+            compound.put("MemberEntity" + imember, entityNBT);
         }
 
         for (int i = 0; this.unprocessedData.contains("UnprocessedEnemyPlayer" + i); i++) {
