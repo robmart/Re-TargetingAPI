@@ -5,16 +5,13 @@ import net.minecraft.entity.passive.horse.DonkeyEntity;
 import net.minecraft.entity.passive.horse.HorseEntity;
 import net.minecraft.entity.passive.horse.LlamaEntity;
 import net.minecraft.entity.passive.horse.MuleEntity;
-import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import robmart.mods.targetingapi.api.Targeting;
-import robmart.mods.targetingapi.api.faction.IFaction;
 import robmart.mods.targetingapi.api.faction.Faction;
-import net.minecraft.entity.player.PlayerEntity;
+import robmart.mods.targetingapi.api.faction.IFaction;
 import robmart.mods.targetingapi.common.commands.CommandFactions;
-
-import java.io.File;
 
 /**
  * Created by Robmart.
@@ -41,7 +38,7 @@ public class CommonProxy {
     }
 
     public void serverStarting(FMLServerStartingEvent event) {
-        IFaction animals = new Faction(event.getServer().getWorld(DimensionType.OVERWORLD), "FarmAnimals");
+        IFaction animals = new Faction(event.getServer().getWorlds().iterator().next(), "FarmAnimals");
         animals.addFriendClass(PlayerEntity.class);
         animals.addMemberClass(CowEntity.class);
         animals.addMemberClass(SheepEntity.class);
