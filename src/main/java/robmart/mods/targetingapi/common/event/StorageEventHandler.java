@@ -3,7 +3,6 @@ package robmart.mods.targetingapi.common.event;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -33,7 +32,7 @@ public class StorageEventHandler {
                 if (file.isFile() && file.exists() && fileName.contains(".dat")) {
                     CompoundNBT nbt = NBTHelper.getNBTFromFile(file);
                     if (nbt != null) {
-                        IFaction faction = new Faction(server.getWorld(DimensionType.OVERWORLD), nbt.getCompound("data").getString("Name"), true);
+                        IFaction faction = new Faction(server.getWorlds().iterator().next(), nbt.getCompound("data").getString("Name"), true);
                         ((WorldSavedData) faction).read(nbt);
                         Targeting.registerFaction(faction);
                     }
