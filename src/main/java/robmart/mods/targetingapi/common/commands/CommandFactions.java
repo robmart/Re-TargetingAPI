@@ -10,6 +10,7 @@ import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
 import robmart.mods.targetingapi.api.Targeting;
+import robmart.mods.targetingapi.api.faction.Faction;
 import robmart.mods.targetingapi.api.faction.IFaction;
 
 public class CommandFactions {
@@ -37,7 +38,7 @@ public class CommandFactions {
     }
 
     private static int addToFaction(String faction, PlayerEntity entity) throws CommandSyntaxException {
-        IFaction iFaction = Targeting.getFaction(faction);
+        Faction iFaction = (Faction) Targeting.getFaction(faction);
         iFaction.addMemberEntity(entity);
         return 1;
     }

@@ -20,5 +20,5 @@ package robmart.mods.targetingapi.api.reference;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 public class Reference {
-    public static final String MOD_ID            = "re-targeting_api";
+    public static final String MOD_ID            = "targetingapi";
 }
