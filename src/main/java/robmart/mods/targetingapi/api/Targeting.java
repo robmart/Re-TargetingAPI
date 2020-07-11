@@ -10,7 +10,8 @@ import net.minecraft.scoreboard.Team;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
-import robmart.mods.targetingapi.api.faction.IFaction;
+import robmart.mods.targetingapi.api.faction.Faction;
+import robmart.mods.targetingapi.api.faction.Faction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,12 +21,12 @@ import java.util.Map;
 @Mod.EventBusSubscriber
 public class Targeting {
 
-    private static HashMap<String, IFaction> factionMap = Maps.newHashMap();
+    private static HashMap<String, Faction> factionMap = Maps.newHashMap();
 
     /**
      * Gets an immutable shallow copy of the faction map
      */
-    public static ImmutableMap<String, IFaction> getFactionMap() {
+    public static ImmutableMap<String, Faction> getFactionMap() {
         return ImmutableMap.copyOf(factionMap);
     }
 
@@ -33,7 +34,7 @@ public class Targeting {
      * Register a new faction
      * @param newFaction The faction that should be registered
      */
-    public static void registerFaction(IFaction newFaction){
+    public static void registerFaction(Faction newFaction){
         for (String name : factionMap.keySet()) {
             if (name.equals(newFaction.getName()))
                 return;
@@ -45,7 +46,7 @@ public class Targeting {
      * Disband (remove) a faction
      * @param faction The faction that should be removed
      */
-    public static void disbandFaction(IFaction faction){
+    public static void disbandFaction(Faction faction){
         for (String name : factionMap.keySet()) {
             if (name.equals(faction.getName()))
                 factionMap.remove(faction.getName());
@@ -57,15 +58,15 @@ public class Targeting {
      * @param factionName The name of the requested faction
      * @return The requested faction
      */
-    public static IFaction getFaction(String factionName){
+    public static Faction getFaction(String factionName){
         return factionMap.get(factionName);
     }
 
-    public static List<IFaction> getFactionsFromEntity(Entity entity) {
-        List<IFaction> factionList = new ArrayList<>();
-        for (IFaction faction : factionMap.values()) {
+    public static List<Faction> getFactionsFromEntity(Entity entity) {
+        List<Faction> factionList = new ArrayList<>();
+        for (Faction faction : factionMap.values()) {
             if (faction.isMember(entity))
-                factionList.add(faction);
+                factionList.add((Faction) faction);
         }
         return factionList;
     }
@@ -196,7 +197,7 @@ public class Targeting {
      * @return Whether caster's faction is friends with target
      */
     public static boolean checkFactionFriends(Entity caster, Entity target){
-        for (IFaction faction : factionMap.values()){
+        for (Faction faction : factionMap.values()){
             if (faction.isMember(caster) && faction.isFriend(target)){
                 return true;
             }
@@ -211,7 +212,7 @@ public class Targeting {
      * @return Whether they are in the same faction or not
      */
     public static boolean checkIfSameFaction(Entity caster, Entity target){
-        for (IFaction faction : factionMap.values()){
+        for (Faction faction : factionMap.values()){
             if (faction.isMember(target.getClass()) && faction.isMember(caster.getClass())) {
                 return true;
             }
@@ -238,7 +239,7 @@ public class Targeting {
      */
     public static boolean isValidEnemy(Entity caster, Entity target) {
         if (isFriendly(caster, target)) return false;
-        for (IFaction faction : factionMap.values()) {
+        for (Faction faction : factionMap.values()) {
             if (faction.isMember(caster) && faction.isEnemy(target))
                 return true;
         }

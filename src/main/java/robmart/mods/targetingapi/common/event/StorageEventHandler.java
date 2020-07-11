@@ -32,7 +32,7 @@ public class StorageEventHandler {
                 if (file.isFile() && file.exists() && fileName.contains(".dat")) {
                     CompoundNBT nbt = NBTHelper.getNBTFromFile(file);
                     if (nbt != null) {
-                        IFaction faction = new Faction(server.getWorlds().iterator().next(), nbt.getCompound("data").getString("Name"), true);
+                        Faction faction = new Faction(server.getWorlds().iterator().next(), nbt.getCompound("data").getString("Name"), true);
                         ((WorldSavedData) faction).read(nbt);
                         Targeting.registerFaction(faction);
                     }
@@ -58,16 +58,16 @@ public class StorageEventHandler {
         File saveDir = new File(event.getWorld().getWorld().getServer().getDataDirectory().getAbsolutePath() +
                 "\\saves\\" + event.getWorld().getWorld().getServer().getFolderName());
         File factionDir = new File(saveDir.getAbsolutePath() + "\\factions");
-        ImmutableMap<String, IFaction> factionMap = Targeting.getFactionMap();
+        ImmutableMap<String, Faction> factionMap = Targeting.getFactionMap();
         if (factionDir.exists()) {
             if (factionDir.isFile()) {
                 factionDir.delete();
                 factionDir.mkdir();
             }
 
-            for (IFaction faction : factionMap.values()) {
+            for (Faction faction : factionMap.values()) {
                 if (faction.getIsPermanent()) {
-                    ((WorldSavedData) faction).save(new File(factionDir.getAbsolutePath() + "\\" + faction.getName() + ".dat"));
+                    faction.save(new File(factionDir.getAbsolutePath() + "\\" + faction.getName() + ".dat"));
                 }
             }
         } else {

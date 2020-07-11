@@ -3,7 +3,7 @@ loaderVersion="[31,)" #mandatory This is typically bumped every Minecraft versio
 issueTrackerURL="https://github.com/robmart/Re-TargetingAPI/issues" #optional
 
 [[mods]]
-modId="re-targeting_api" #mandatory
+modId="targetingapi" #mandatory
 version="${file.jarVersion}" #mandatory
 displayName="Re-TargetingAPI" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification <here>
